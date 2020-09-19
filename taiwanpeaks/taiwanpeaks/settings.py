@@ -3,7 +3,8 @@ from pathlib import Path
 import environ
 
 
-env = environ.Env.read_env()
+env = environ.Env()
+environ.Env.read_env('.env')
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,6 +130,7 @@ AWS_IS_GZIPPED = False
 
 # Cache
 
+"""
 CACHES = {
     'staticfiles': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -136,22 +138,23 @@ CACHES = {
         'LOCATION': 'staticfiles',
     },
 }
+"""
 
 
 # Logging
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
         },
     },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
         }
     }
 }
