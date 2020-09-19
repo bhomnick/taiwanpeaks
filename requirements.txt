@@ -1,0 +1,6 @@
+# General
+python-environ==0.4.*
+
+# Django
+Django==3.1.1
+django-herokuapp==0.9.*
