@@ -1,6 +1,7 @@
 # General
+boto3==1.15.*
 python-environ==0.4.*
 
 # Django
 Django==3.1.1
-django-herokuapp==0.9.*
+django-storages==1.10.*

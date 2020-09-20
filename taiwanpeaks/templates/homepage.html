@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -6,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home | 1 | Alpins | Mountain and trekking Template</title>
     <meta name="description" content="">
-    <script src="/static/scripts/jquery.min.js"></script>
-    <script src="/static/scripts/main.js"></script>
-    <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/glide.css">
-    <link rel="stylesheet" href="/static/css/magnific-popup.css">
-    <link rel="stylesheet" href="/static/css/content-box.css">
-    <link rel="stylesheet" href="/static/css/contact-form.css">
-    <link rel="stylesheet" href="/static/css/media-box.css">
-    <link rel="stylesheet" href="/static/css/skin.css">
-    <link rel="icon" href="/static/media/favicon.png">
+    <script src="{% static 'scripts/jquery.min.js' %}"></script>
+    <script src="{% static 'scripts/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/glide.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/content-box.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contact-form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media-box.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skin.css' %}">
+    <link rel="icon" href="{% static 'media/favicon.png' %}">
 </head>
 <body class="page-main">
     <div id="preloader"></div>
@@ -24,10 +25,10 @@
         <div class="container">
             <div class="menu-brand">
                 <a href="#">
-                    <img class="logo-default scroll-hide" src="/static/media/logo-white-blue.svg" alt="logo" />
-                    <img class="logo-retina scroll-hide" src="/static/media/logo-white-blue.svg" alt="logo" />
-                    <img class="logo-default scroll-show" src="/static/media/logo-white-solid.svg" alt="logo" />
-                    <img class="logo-retina scroll-show" src="/static/media/logo-white-solid.svg" alt="logo" />
+                    <img class="logo-default scroll-hide" src="{% static 'media/logo-white-blue.svg' %}" alt="logo" />
+                    <img class="logo-retina scroll-hide" src="{% static 'media/logo-white-blue.svg' %}" alt="logo" />
+                    <img class="logo-default scroll-show" src="{% static 'media/logo-white-solid.svg' %}" alt="logo" />
+                    <img class="logo-retina scroll-show" src="{% static 'media/logo-white-solid.svg' %}" alt="logo" />
                 </a>
             </div>
             <i class="menu-btn"></i>
@@ -90,10 +91,10 @@
                 <div class="menu-right">
                     <ul class="lan-menu">
                         <li class="dropdown">
-                            <a href="#"><img src="/static/media/en.png" />EN </a>
+                            <a href="#"><img src="{% static 'media/en.png' %}" />EN </a>
                             <ul>
-                                <li><a href="#"><img src="/static/media/it.png" />IT</a></li>
-                                <li><a href="#"><img src="/static/media/es.png" />ES</a></li>
+                                <li><a href="#"><img src="{% static 'media/it.png' %}" />IT</a></li>
+                                <li><a href="#"><img src="{% static 'media/es.png' %}" />ES</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -566,15 +567,15 @@
                 <span><a href="contacts.html">Contact us</a> | <a href="#">Privacy policy</a></span>
             </div>
         </div>
-        <link rel="stylesheet" href="/static/media/icons/iconsmind/line-icons.min.css">
-        <script src="/static/scripts/parallax.min.js"></script>
-        <script src="/static/scripts/glide.min.js"></script>
-        <script src="/static/scripts/magnific-popup.min.js"></script>
-        <script src="/static/scripts/tab-accordion.js"></script>
-        <script src="/static/scripts/imagesloaded.min.js"></script>
-        <script src="/static/scripts/progress.js" async></script>
-        <script src="/static/scripts/custom.js" async></script>
-        <script src="/static/scripts/contact-form/contact-form.js" async></script>
+        <link rel="stylesheet" href="{% static 'media/icons/iconsmind/line-icons.min.css' %}">
+        <script src="{% static 'scripts/parallax.min.js' %}"></script>
+        <script src="{% static 'scripts/glide.min.js' %}"></script>
+        <script src="{% static 'scripts/magnific-popup.min.js' %}"></script>
+        <script src="{% static 'scripts/tab-accordion.js' %}"></script>
+        <script src="{% static 'scripts/imagesloaded.min.js' %}"></script>
+        <script src="{% static 'scripts/progress.js' %}" async></script>
+        <script src="{% static 'scripts/custom.js' %}" async></script>
+        <script src="{% static 'scripts/contact-form/contact-form.js' %}" async></script>
     </footer>
 </body>
 </html>
