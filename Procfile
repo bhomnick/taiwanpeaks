@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT taiwanpeaks.wsgi:application
+web: cd taiwanpeaks && waitress-serve --port=$PORT taiwanpeaks.wsgi:application
