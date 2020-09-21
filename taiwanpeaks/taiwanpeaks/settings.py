@@ -14,7 +14,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = [
-    'localhost'
+    'localhost',
     'taiwanpeaks.herokuapp.com',
     'peaks.tw'
 ]
