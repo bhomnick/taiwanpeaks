@@ -40,6 +40,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# SSL
+
+if env.bool('USE_SSL', default=False):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+
+
 ROOT_URLCONF = 'taiwanpeaks.urls'
 
 TEMPLATES = [
