@@ -14,11 +14,9 @@ class HerokuRedirectMiddleware:
     def __call__(self, request):
         if settings.HEROKU_APP and settings.HEROKU_DOMAIN:
             host = request.get_host().partition(':')[0]
-            print(host)
             if host == f'{settings.HEROKU_APP}.herokuapp.com':
                 protocol = 'https' if settings.USE_SSL else 'http'
-                redirect = '{protocol}://{settings.HEROKU_DOMAIN}{request.path}'
-                print(redirect)
+                redirect = f'{protocol}://{settings.HEROKU_DOMAIN}{request.path}'
                 return HttpResponsePermanentRedirect(redirect)
 
         return self.get_response(request)
