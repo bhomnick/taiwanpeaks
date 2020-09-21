@@ -14,6 +14,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = [
+    'localhost'
     'taiwanpeaks.herokuapp.com',
     'peaks.tw'
 ]
@@ -38,7 +39,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'common.middleware.HerokuRedirectMiddleware'
 ]
+
+
+# Heroku
+
+HEROKU_APP = env('HEROKU_APP', default=None)
+HEROKU_DOMAIN = env('HEROKU_DOMAIN', default=None)
 
 
 # SSL
