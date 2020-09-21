@@ -51,7 +51,9 @@ HEROKU_DOMAIN = env('HEROKU_DOMAIN', default=None)
 
 # SSL
 
-if env.bool('USE_SSL', default=False):
+USE_SSL = env.bool('USE_SSL', default=False)
+
+if USE_SSL
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
 
