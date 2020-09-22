@@ -1,0 +1,13 @@
+{% load static %}
+
+<a href="#" class="media-box media-box-reveal" data-anima="scale" data-trigger="hover">
+  <img class="anima" src="{% static img_path %}" alt="">
+  <div class="caption">
+    <h2>{{ name }}</h2>
+    <div class="extra-field">#{{ ranking }}</div>
+    <h3>{{ height }} m</h3>
+    <p>
+      Level: <strong>{{ difficulty }}</strong>
+    </p>
+  </div>
+</a>

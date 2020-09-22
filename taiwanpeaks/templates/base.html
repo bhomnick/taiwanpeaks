@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}Peaks of Taiwan{% endblock %}</title>
+	<meta name="description" content="{% block meta_description %}{% endblock %}">
+	<script src="{% static 'scripts/jquery.min.js' %}"></script>
+	<script src="{% static 'scripts/main.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/glide.css' %}">
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<link rel="stylesheet" href="{% static 'css/content-box.css' %}">
+	<link rel="stylesheet" href="{% static 'css/contact-form.css' %}">
+	<link rel="stylesheet" href="{% static 'css/media-box.css' %}">
+	<link rel="stylesheet" href="{% static 'css/skin.css' %}">
+	<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+	<link rel="icon" href="{% static 'media/favicon.png' %}">
+	{% block extra_head %}{% endblock %}
+</head>
+<body class="page-main">
+	<div id="preloader"></div>
+	
+	{% include "_components/header_nav.html" %}
+	
+	<main>
+	  {% block content %}{% endblock %}
+	</main>
+	
+	{% include "_components/footer.html" %}
+	
+	<link rel="stylesheet" href="{% static 'media/icons/iconsmind/line-icons.min.css' %}">
+		<script src="{% static 'scripts/parallax.min.js' %}"></script>
+		<script src="{% static 'scripts/glide.min.js' %}"></script>
+		<script src="{% static 'scripts/magnific-popup.min.js' %}"></script>
+		<script src="{% static 'scripts/tab-accordion.js' %}"></script>
+		<script src="{% static 'scripts/imagesloaded.min.js' %}"></script>
+		<script src="{% static 'scripts/progress.js' %}" async></script>
+		<script src="{% static 'scripts/custom.js' %}" async></script>
+		<script src="{% static 'scripts/contact-form/contact-form.js' %}" async></script>
+</body>
+</html>

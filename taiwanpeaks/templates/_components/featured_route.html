@@ -1,0 +1,21 @@
+{% load static %}
+
+<li>
+  <div class="cnt-box cnt-box-info" data-href="#">
+    <a href="#" class="img-box"><img src="{% static img_path %}" alt="" /></a>
+    <div class="caption">
+      <h2>{{ name }}</h2>
+      <div class="cnt-info">
+        <div><span>Days</span><span>{{ days }}</span></div>
+        <div><span>Peaks</span><span>{{ num_peaks }}</span></div>
+        <div><span>Difficulty</span><span>{{ difficulty }}</span></div>
+      </div>
+      <p>
+        {{ description }}
+      </p>
+      <div class="bottom-info">
+        {{ location }}
+      </div>
+    </div>
+  </div>
+</li>
