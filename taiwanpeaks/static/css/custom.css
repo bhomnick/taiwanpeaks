@@ -15,6 +15,88 @@ Table of contents
 */
 
 .homepage-author-img {
-    float: left;
-    margin: 5px 15px 15px 0;
+	float: left;
+	margin: 5px 15px 15px 0;
+}
+
+
+/*
+# Route list
+===================================================================
+*/
+
+.route-list-filters select {
+	width: 100%;
+}
+
+.route-list-filters label {
+	font-weight: bold;
+	display: block;
+	width: 100%;
+}
+
+.route-list-item h2 {
+    display: inline-block;
+}
+
+.route-list-item .caption {
+    padding-bottom: 25px !important;
+}
+
+.route-list-item .extra-field {
+    color: rgb(255, 255, 255);
+	background-color: #379cf4;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 11px;
+	letter-spacing: .5px;
+	padding: 5px 10px;
+	border-radius: 3px;
+	float: right;
+	margin-top: -8px;
+}
+
+.route-list-item ul {
+    margin: 8px 0 0 0 !important;
+}
+
+.route-list-sorting {
+    display: table;
+    width: 100%;
+    margin-top: -18px;
+}
+
+.route-list-sorting > * {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.route-list-sorting a.active {
+    margin-right: 20px;
+}
+
+.route-list-sorting a.active:after {
+    font-family: "Icons";
+    content: "\68";
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    transition: all .5s;
+    transform: translateY(-50%) rotate(-270deg);
+    text-transform: none;
+}
+
+.route-list-sorting .menu-inner {
+    float: right;
+}
+
+.route-list-sorting .menu-inner li:before {
+    height: 0 !important;
+}
+
+
+
+.route-list-sorting-label {
+    display: inline-block;
+    margin-top: 10px;
 }

@@ -27,6 +27,8 @@
 	
 	{% include "_components/header_nav.html" %}
 	
+	{% block header %}{% endblock %}
+	
 	<main>
 	  {% block content %}{% endblock %}
 	</main>
@@ -34,13 +36,15 @@
 	{% include "_components/footer.html" %}
 	
 	<link rel="stylesheet" href="{% static 'media/icons/iconsmind/line-icons.min.css' %}">
-		<script src="{% static 'scripts/parallax.min.js' %}"></script>
-		<script src="{% static 'scripts/glide.min.js' %}"></script>
-		<script src="{% static 'scripts/magnific-popup.min.js' %}"></script>
-		<script src="{% static 'scripts/tab-accordion.js' %}"></script>
-		<script src="{% static 'scripts/imagesloaded.min.js' %}"></script>
-		<script src="{% static 'scripts/progress.js' %}" async></script>
-		<script src="{% static 'scripts/custom.js' %}" async></script>
-		<script src="{% static 'scripts/contact-form/contact-form.js' %}" async></script>
+  <link rel="stylesheet" href="{% static 'media/icons/fontawesome/all.css' %}">
+  <script src="{% static 'scripts/parallax.min.js' %}"></script>
+  <script src="{% static 'scripts/glide.min.js' %}"></script>
+  <script src="{% static 'scripts/isotope.min.js' %}"></script>
+  <script src="{% static 'scripts/magnific-popup.min.js' %}"></script>
+  <script src="{% static 'scripts/tab-accordion.js' %}"></script>
+  <script src="{% static 'scripts/imagesloaded.min.js' %}"></script>
+  <script src="{% static 'scripts/progress.js' %}" async></script>
+  <script src="{% static 'scripts/custom.js' %}" async></script>
+  <script src="{% static 'scripts/contact-form/contact-form.js' %}" async></script>
 </body>
 </html>

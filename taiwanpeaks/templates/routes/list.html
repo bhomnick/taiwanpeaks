@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block header %}
+<header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{% static 'media/img/homepage-banner.jpg' %}" data-offset="0">
+  <div class="container">
+    <h1>Route Guides</h1>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="section-base section-color">
+	<div class="container">
+		<div class="row">
+      <div class="col-lg-3 route-list-filters">
+        <form class="form form-box">		    
+          <label>Level
+            <select class="input-select">
+              <option>Any</option>
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+              <option>Expert</option>
+            </select>
+          </label>
+          <label>Duration
+            <select class="input-select">
+              <option>Any</option>
+              <option>1 day</option>
+              <option>2-4 days</option>
+              <option>5-7 days</option>
+              <option>8+ days</option>
+            </select>
+          </label>
+          <label>Public Transport Accessible
+            <select class="input-select">
+              <option>Any</option>
+              <option>Yes</option>
+            </select>
+          </label>
+          <label>Cabins
+            <select class="input-select">
+              <option>Any (Cabins or Camping)</option>
+              <option>Cabins only</option>
+            </select>
+          </label>
+          <a href="#">clear filters</a>
+        </form>
+      </div>
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="route-list-sorting">
+            <span class="text-sm text-bold">Showing 12 of 24 routes</span>
+            <div class="menu-inner">
+              <ul>
+                <li class="route-list-sorting-label">Sort by:</li>
+                <li><a class="active" data-filter="cat-2" href="#">Name</a></li>
+                <li><a data-filter="cat-3" href="#">Duration</a></li>
+                <li><a data-filter="cat-4" href="#">Level</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="grid-list" data-columns="1">
+            <div class="grid-box">
+              {% include "routes/_list_item.html" with name="North 1st section" duration="6-7 days" peaks="7" camp="1" cabins="1" difficulty="Intermediate" %}
+              {% include "routes/_list_item.html" with name="Jade 1 day ascent" duration="1 day" peaks="1" difficulty="Intermediate"%}
+              {% include "routes/_list_item.html" with name="South 3rd section" duration="10 days" peaks="5" camp="1" difficulty="Expert" %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+</section>
+{% endblock %}

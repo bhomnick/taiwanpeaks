@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="grid-item">
+  <div class="route-list-item cnt-box cnt-box-blog-side boxed" data-href="post.html">
+    <a href="post.html" class="img-box">
+      <img src="{% static 'media/img/route-qilainanhua.png' %}" alt="" />
+    </a>
+    <div class="caption">
+      <div>
+        <h2 class="align-left">{{ name }}</h2>
+        <span class="align-right extra-field">{{ difficulty }}</span>
+      </div>
+      <div>
+        <p>
+          Lorem ipsum dolor sitamet consectetur adipisicing elito sed do eiusmod tempore.amet consectetur adipisicing elito sed do eiusmod tempore.
+        </p>
+        <ul class="icon-list icon-list-horizontal">
+          <li><i class="fas fa-calendar-alt text-xs"></i>{{ duration }}</li>
+          <li><i class="fas fa-mountain text-xs"></i>{{ peaks }} peaks</li>
+          <li><i class="fas fa-campground text-xs"></i>Camping/Cabins</li>
+          <li><i class="fas fa-bus"></i>Accessible</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
