@@ -106,9 +106,54 @@ Table of contents
     height: 0 !important;
 }
 
-
-
 .route-list-sorting-label {
     display: inline-block;
     margin-top: 10px;
+}
+
+/*
+# Route Detail
+===================================================================
+*/
+
+.route-detail-top-container {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.route-detail-menu {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.route-detail-itinerary .badge p {
+    margin-bottom: 3px;
+}
+
+.route-detail-itinerary-arrow {
+    color: #379cf4;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.route-points {
+    font-size: 0;
+}
+
+.route-point {
+    display: inline-block;
+    height: 36px;
+    line-height: 20px;
+    border: 2px solid #379cf4;
+    border-radius: 14px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #379cf4;
+    color: white;
+}
+
+.route-point-spacer {
+    margin: 0 8px;
+    display: inline-block;
+    font-size: 14px;
 }

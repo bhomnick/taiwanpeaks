@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block header %}
+<header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{% static 'media/img/homepage-banner.jpg' %}" data-offset="0">
+  <div class="container">
+	  <h1>North 1st Section</h1>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="section-color">
+<div class="container route-detail-top-container">
+  <div class="row align-center route-detail-menu">
+    <div class="menu-inner">
+      <ul>
+        <li><a href="#">Top</a></li>
+        <li><a href="#">Details</a></li>
+        <li><a href="#">Itinerary</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Practicalities</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section-base">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2>At a glance</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipiscing elitsed do eiusmod tempor incididunt utlabore et dolore magna aliqua.
+          Utenim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex rud exercitation ullamco lconsequat. Duis aute irure dolor in reprehenderit
+          in voluptate velit esse cillum dolore eu fadipisis nisi ut aliquip ex ea aliquip ex rud exercitation ullamco lcon commodo consequat.
+        </p>
+      </div>
+      
+      <div class="col-lg-6">
+        <ul class="text-list text-list-line">
+          <li><b>Difficulty</b><hr /><p>Intermediate</p></li>
+          <li><b>Total distance</b><hr /><p>85 km</p></li>
+          <li><b>Days required</b><hr /><p>6-7</p></li>
+          <li><b>Top 100 peaks</b><hr /><p>7</p></li>
+          <li><b>Location</b><hr /><p>Taroko National Park</p></li>
+          <li><b>Public transportation</b><hr /><p>Accessible</p></li>
+          <li><b>Permits</b><hr /><p>Police and Park</p></li>
+          <li><b>Cabins</b><hr /><p>Some, camping required</p></li>
+        </ul>
+      </div>
+      
+      
+    </div>
+  </div>
+</section>
+<section class="section-image light" data-parallax="scroll" data-bleed="100" data-image-src="{% static 'media/img/homepage-peaks-banner.jpg' %}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Days</h3>
+          <p class="text-50 text-black no-margin">6-7</p> 
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Distance</h3>
+          <p class="text-50 text-black no-margin">85 KM</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Peaks</h3>
+          <p class="text-50 text-black no-margin">7</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Difficulty</h3>
+          <p class="text-50 text-black no-margin">INTERMEDIATE</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section-base">
+  <div class="container">
+    <div class="row route-detail-itinerary">
+      <div class="timeline">
+        <div>
+          <div class="badge">
+            <p>DAY 1</p>
+            <span>6.5 hrs / 10 km</span>
+            <span><i class="fas fa-home"></i>&nbsp;Yunling cabin</span>      
+          </div>
+          <div class="panel">
+            <h3 class="timeline-title">Shengguang trailhead to Yunling cabin</h3>
+            <hr class="space-xs" />
+            <div class="route-points">
+              <span class="route-point"><i class="fas fa-hiking"></i>&nbsp;Shengguang</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point">284 forest road</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point">284 8.6k</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point"><i class="fas fa-mountain"></i>Mt. Duojiatun</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point"><i class="fas fa-home"></i>Yunling cabin</span>
+            </div>
+            <hr class="space-xs" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipiscing elitsed do eiusmod tempor incididunt utlabore et dolore magna aliqua.
+              Utenim ad minim veniam quis nostrud exercitation ullamco labor ommodo consequat. Lorem ipsum dolor sit amet consectetur adipiscing elitsed do eiusmod tempor incididunt utlabore et dolore magna aliqua.
+              Utenim ad minim veniam quis nostrud exercitation ullamco labor ommodo consequat.
+            </p>
+          </div>
+        </div>
+        <div class="inverted">
+          <div class="badge">
+            <p>DAY 2</p>
+            <span>10 hrs / 9.5 km</span>
+            <span><i class="fas fa-home"></i>&nbsp;Nanhu cabin</span>      
+          </div>
+          <div class="panel">
+            <h3 class="timeline-title">Yunling cabin to Nanhu cabin</h3>
+            <hr class="space-xs" />
+            <div class="route-points">
+              <span class="route-point"><i class="fas fa-hiking"></i>&nbsp;Shengguang</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point">284 forest road</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point">284 8.6k</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point"><i class="fas fa-mountain"></i>Mt. Duojiatun</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point"><i class="fas fa-home"></i>Yunling cabin</span>
+            </div>
+            <hr class="space-xs" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipiscing elitsed do eiusmod tempor incididunt utlabore et dolore magna aliqua.
+              Utenim ad minim veniam quis nostrud exercitation ullamco labor ommodo consequat.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="badge">
+            <p>DAY 3</p>
+            <span>6.5 hrs / 8 km</span>
+            <span><i class="fas fa-home"></i>&nbsp;Nanhu cabin</span>    
+          </div>
+          <div class="panel">
+            <h3 class="timeline-title">Shengguang Trailhead to Yunling Cabin</h3>
+            <hr class="space-xs" />
+            <div class="route-points">
+              <span class="route-point"><i class="fas fa-hiking"></i>&nbsp;Shengguang</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point">284 forest road</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point">284 8.6k</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point"><i class="fas fa-mountain"></i>Mt. Duojiatun</span><i class="fas fa-arrow-right route-point-spacer"></i>
+              <span class="route-point"><i class="fas fa-home"></i>Yunling cabin</span>
+            </div>
+            <hr class="space-xs" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipiscing elitsed do eiusmod tempor incididunt utlabore et dolore magna aliqua.
+              Utenim ad minim veniam quis nostrud exercitation ullamco labor ommodo consequat.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
