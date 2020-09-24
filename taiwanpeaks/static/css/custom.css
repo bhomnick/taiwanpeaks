@@ -60,6 +60,18 @@ Table of contents
     margin: 8px 0 0 0 !important;
 }
 
+.route-list-checkbox-group {
+    margin-bottom: 15px;
+}
+
+.route-list-checkbox-group .form-checkbox {
+    margin: 0 0 5px 0;
+}
+
+.route-list-checkbox-group h4 {
+    margin-bottom: 5px;
+}
+
 .route-list-sorting {
     display: table;
     width: 100%;
