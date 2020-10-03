@@ -126,8 +126,39 @@ Table of contents
     margin: 0 auto;
 }
 
+.route-detail-list-container {
+}
+
 .route-detail-itinerary .badge p {
-    margin-bottom: 3px;
+    margin-bottom: 12px;
+}
+
+.route-detail-itinerary .inverted .badge {
+    padding-right: 30px;
+}
+
+.route-detail-itinerary .grid-box {
+    grid-gap: 15px;
+}
+
+.route-detail-itinerary .route-detail-item {
+    display: flex;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 10px;
+}
+
+.route-detail-itinerary .route-detail-item i {
+    display: inline-block;
+    flex: 0 0 15px;
+    text-align: center;
+    margin-right: 8px;
+    padding-top: 2px;
+}
+
+.route-detail-itinerary .route-detail-item span {
+    display: inline-block;
+    white-space: normal;
 }
 
 .route-detail-itinerary-arrow {
@@ -136,8 +167,13 @@ Table of contents
     margin: 0 10px;
 }
 
+.route-detail-map .google-map {
+    min-height: 600px;
+}
+
 .route-points {
     font-size: 0;
+    line-height: 45px;
 }
 
 .route-point {
