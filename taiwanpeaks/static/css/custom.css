@@ -129,12 +129,16 @@ Table of contents
 .route-detail-list-container {
 }
 
+.route-detail-itinerary .cnt-box {
+   text-align: left !important;
+}
+
 .route-detail-itinerary .badge p {
     margin-bottom: 12px;
 }
 
-.route-detail-itinerary .inverted .badge {
-    padding-right: 30px;
+.route-detail-itinerary .badge h2 {
+    margin-bottom: 12px;
 }
 
 .route-detail-itinerary .grid-box {
