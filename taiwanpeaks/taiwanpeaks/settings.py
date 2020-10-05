@@ -29,8 +29,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 3rd party
+    'sorl.thumbnail',
+
+    # Project
     'common',
-    'routes'
+    'photos',
+    'routes',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +126,17 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Media
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Thumbnails
+
+THUMBNAIL_PREFIX = 'media/cache/'
 
 
 # Static files

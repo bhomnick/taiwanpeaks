@@ -5,13 +5,37 @@ CUSTOM STYLES - CUSTOM.CSS
 ===================================================================
 Table of contents
 
+ - General
  - Homepage
 
 ------------------------------------------------------------------- 
 
-# Homepage
+# General
 ===================================================================
 
+*/
+
+.mfp-title {
+    padding-right: 0 !important;
+}
+
+.attribution-banner {
+    position: absolute;
+    right: 5px;
+    bottom: 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.attribution-banner a {
+    color: white;
+}
+
+
+/*
+# Homepage
+===================================================================
 */
 
 .homepage-author-img {

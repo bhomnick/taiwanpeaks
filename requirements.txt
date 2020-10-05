@@ -1,8 +1,11 @@
 # General
 boto3==1.15.*
+Pillow==7.2.*
 python-environ==0.4.*
+sorl-thumbnail==12.6.*
 waitress==1.4.*
 
 # Django
 Django==3.1.1
+django-model-utils==4.0.*
 django-storages==1.10.*

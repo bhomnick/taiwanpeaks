@@ -1,19 +1,14 @@
 {% extends "base.html" %}
 
-{% load static thumbnail photos %}
+{% load static %}
 
 {% block header %}
-{% thumbnail route.header_background_photo.image "1920x1080" crop="top" as im %}
-<header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
+<header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{% static 'media/img/homepage-banner.jpg' %}" data-offset="0">
   <div class="container">
-	  <h1>{{ route.name }}</h1>
-	  <h2>{{ route.name_zh }}</h2>
-  </div>
-  <div class="attribution-banner">
-    {% attribution route.header_background_photo %}
+	  <h1>Nanhu 4 Day Trek</h1>
+	  <h2>南湖群峰</h2>
   </div>
 </header>
-{% endthumbnail %}
 {% endblock %}
 
 {% block content %}
@@ -47,34 +42,54 @@
           easy water accessibility, and good public transportation options, 
           this 50km hike is a great first foray into multi-day trekking in 
           Taiwan.
-        </p>      
+        </p>        
       </div>
       <div class="col-lg-5" style="line-height:100%;">
         <ul class="text-list text-list-line route-detail-list">
-          <li><b>Difficulty</b><hr /><p>{{ route.get_difficulty_display }}</p></li>
-          <li><b>Total distance</b><hr /><p>{{ route.total_distance }} km</p></li>
-          <li><b>Days required</b><hr /><p>{{ route.days_required }}</p></li>
-          <li><b>Top 100 peaks</b><hr /><p>{{ route.peak_count }}</p></li>
-          <li><b>Location</b><hr /><p>{{ route.get_location_display }}</p></li>
-          <li><b>Public transport</b><hr /><p>{% if route.public_transport_accessible %}Yes{% else %}No{% endif %}</p></li>
-          <li><b>Permits</b><hr /><p>
-            {% if route.np_permit_required %}
-            Park
-            {% endif %}
-          </p></li>
-          <li><b>Cabins</b><hr /><p>{{ route.get_cabin_status_display }}</p></li>
+          <li><b>Difficulty</b><hr /><p>Intermediate</p></li>
+          <li><b>Total distance</b><hr /><p>50 km</p></li>
+          <li><b>Days required</b><hr /><p>4</p></li>
+          <li><b>Top 100 peaks</b><hr /><p>4</p></li>
+          <li><b>Location</b><hr /><p>Taroko National Park</p></li>
+          <li><b>Public transport</b><hr /><p>Accessible</p></li>
+          <li><b>Permits</b><hr /><p>Police and Park</p></li>
+          <li><b>Cabins</b><hr /><p>Yes</p></li>
         </ul>
       </div>
     </div>
   
     <div class="row">
-      <ul class="slider" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-
+      <ul class="slider" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1">
+        <li>
+          <a class="img-box" href="#">
+            <img src="https://themekit.dev/shared/thumbs/wide.png" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-box" href="#">
+            <img src="https://themekit.dev/shared/thumbs/wide.png" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-box" href="#">
+            <img src="https://themekit.dev/shared/thumbs/wide.png" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-box" href="#">
+            <img src="https://themekit.dev/shared/thumbs/wide.png" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-box" href="#">
+            <img src="https://themekit.dev/shared/thumbs/wide.png" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-box" href="#">
+            <img src="https://themekit.dev/shared/thumbs/wide.png" alt="">
+          </a>
+        </li>
       </ul>
     </div>
   </div>
