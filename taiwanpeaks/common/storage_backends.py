@@ -11,5 +11,5 @@ class StaticRootS3Boto3Storage(S3Boto3Storage):
 class MediaRootS3Boto3Storage(S3Boto3Storage):
 
     def __init__(self, *args, **kwargs):
-        kwargs['location'] = 'static'
+        kwargs['location'] = 'media'
         super().__init__(*args, **kwargs)
