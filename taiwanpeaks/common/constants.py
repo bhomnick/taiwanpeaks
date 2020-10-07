@@ -7,8 +7,6 @@ DIFFICULTY_CHOICES = Choices(
     ('advanced', 'Advanced'),
     ('expert', 'Expert')
 )
-
-
 NP_CHOICES = Choices(
     ('taroko', 'Taroko National Park'),
     ('sheipa', 'Shei-pa National Park'),

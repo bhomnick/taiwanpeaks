@@ -1,0 +1,69 @@
+{% load thumbnail photos %}
+
+<div class="row cnt-box cnt-call">
+  <div class="col-lg-4">
+    <div class="badge">
+      <h2>DAY {{ day.day_no }}</h2>
+      <div class="route-detail-item">
+        <i class="fas fa-map-marked-alt"></i><span>{{ day.total_hours}} hrs / {{ day.total_distance }} km</span>
+      </div>
+      <div class="route-detail-item">
+        <i class="fas {% if day.rest_type == 'cabin' %}fa-home{% else %}fa-campground{% endif %}"></i><span>{{ day.rest_name }}</span>
+      </div>
+      {% if day.water_desc %}
+      <div class="route-detail-item">
+        <i class="fas fa-tint"></i><span>{{ day.water_desc }}</span>    
+      </div>
+      {% endif %}
+      <hr class="space-xs" />
+      {% if day.photos.count %}
+      <div class="grid-list list-gallery" data-lightbox-anima="fade-top" data-columns="3">
+        <div class="grid-box route-itinerary-photos">
+          {% for photo in day.photos.all %}
+          {% thumbnail photo.photo.image "1920x1080" as im_full %}
+          {% thumbnail photo.photo.image "480x270" crop="center" as im_small %}
+          <div class="grid-item">
+            <a class="img-box" href="{{ im_full.url }}" title='{{ photo.photo.description }} - {% attribution photo.photo %}'>
+              <img src="{{ im_small.url }}">
+            </a>
+          </div>
+          {% endthumbnail %}
+          {% endthumbnail %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="panel">
+      <h3 class="timeline-title">{{ day.title }}</h3>
+      <hr class="space-xs" />
+      <div class="route-points">
+        {% for point in day.points.all %}
+        <span class="route-point">
+          {% if point.type %}
+          <i class="fas 
+            {% if point.type == 'trailhead' %}
+              fa-hiking
+            {% elif point.type == 'peak' %}
+              fa-mountain
+            {% elif point.type == 'cabin' %}
+              fa-home
+            {% endif %}
+          "></i>&nbsp;
+          {% endif %}
+          {{ point.name }}
+        </span>
+        {% if not forloop.last %}
+          <i class="fas fa-arrow-right route-point-spacer"></i>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <hr class="space-xs" />
+      <p>
+        {{ day.description }}
+      </p>
+    </div>
+  </div>
+</div>

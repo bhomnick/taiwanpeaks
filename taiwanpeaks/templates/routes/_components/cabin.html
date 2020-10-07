@@ -1,0 +1,33 @@
+{% load thumbnail photos %}
+
+<div class="panel {% if active %}active{% endif %}">
+  <div class="row">
+    <div class="col-lg-6">
+      {% thumbnail cabin.photo.image "1920x1080" as im_full %}
+      {% thumbnail cabin.photo.image "800x500" crop="center" as im_small %}
+      <a class="img-box lightbox" href="{{ im_full.url }}" data-lightbox-anima="fade-in" title='{% attribution cabin.photo %}'>
+        <img src="{{ im_small.url }}" alt="">
+      </a>
+      {% endthumbnail %}
+      {% endthumbnail %}  
+    </div>
+    <div class="col-lg-6">
+      <div class="title">
+        <h3>{{ cabin.name }}</h3>
+        <p>{{ cabin.name_zh }}</p>
+      </div>
+      <p>
+        {{ cabin.description }}
+      </p>
+      <table class="table table-grid table-border align-left text-bold table-10">
+        <tbody>
+          <tr>
+            <td>{{ cabin.capacity }} beds</td>
+            <td>{{ cabin.altitude }} m</td>
+            <td>{{ cabin.latitude }}°N {{ cabin.longitude }}°E</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

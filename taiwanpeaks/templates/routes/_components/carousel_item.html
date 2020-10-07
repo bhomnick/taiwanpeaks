@@ -1,9 +1,9 @@
 {% load static thumbnail photos %}
 
 {% thumbnail photo.image "1920x1080" as im_full %}
-{% thumbnail photo.image "480x270" as im_small %}
+{% thumbnail photo.image "480x270" crop="center" as im_small %}
 <li>
-  <a class="img-box lightbox" href="{{ im_full.url }}" title='{% attribution photo %}'>
+  <a class="img-box" href="{{ im_full.url }}" title='{% attribution photo %}'>
     <img src="{{ im_small.url }}">
   </a>
 </li>

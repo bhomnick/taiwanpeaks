@@ -31,7 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party
+    'django_object_actions',
     'sorl.thumbnail',
+    'taggit',
 
     # Project
     'common',
@@ -49,6 +51,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'common.middleware.HerokuRedirectMiddleware'
 ]
+
+# DB
+
+DATABASES = {
+    'default': env.db()
+}
 
 
 # Heroku
@@ -134,6 +142,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
+# Flickr
+FLICKR_KEY = env('FLICKR_KEY', default='')
+FLICKR_SECRET = env('FLICKR_SECRET', default='')
+
+
 # Thumbnails
 
 THUMBNAIL_PREFIX = 'media/cache/'
@@ -143,6 +156,10 @@ THUMBNAIL_PREFIX = 'media/cache/'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Tagging
+
+TAGGIT_CASE_INSENSITIVE = True
 
 
 # AWS

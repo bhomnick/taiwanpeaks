@@ -2,6 +2,15 @@
 
 {% load static thumbnail photos %}
 
+{% block extra_head %}
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css"
+/>
+<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+{% endblock %}
+
 {% block header %}
 {% thumbnail route.header_background_photo.image "1920x1080" crop="top" as im %}
 <header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
@@ -68,45 +77,47 @@
     </div>
   
     <div class="row">
-      <ul class="slider" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-        {% include "routes/_components/carousel_item.html" with photo=route.header_background_photo %}
-
+      <ul class="slider route-carousel" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
+        {% for photo in route.carousel_photos.all %}
+        {% include "routes/_components/carousel_item.html" with photo=photo.photo %}
+        {% endfor %}
       </ul>
     </div>
   </div>
 </section>
-<section class="section-image light" data-parallax="scroll" data-bleed="100" data-image-src="{% static 'media/img/homepage-peaks-banner.jpg' %}">
+{% thumbnail route.summary_background_photo.image "1920x1080" crop="top" as im %}
+<section class="section-image light" data-parallax="scroll" data-bleed="100" data-image-src="{{ im.url }}">
+{% endthumbnail %}
   <div class="container">
-    <div class="row">
+    <div class="row route-detail-banner">
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div>
           <h3>Days</h3>
-          <p class="text-50 text-black no-margin">6-7</p> 
+          <p class="text-50 text-black no-margin">{{ route.days_required }}</p> 
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div>
           <h3>Distance</h3>
-          <p class="text-50 text-black no-margin">85 KM</p>
+          <p class="text-50 text-black no-margin">{{ route.total_distance}} KM</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div>
           <h3>Peaks</h3>
-          <p class="text-50 text-black no-margin">7</p>
+          <p class="text-50 text-black no-margin">{{ route.peak_count }}</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div>
           <h3>Difficulty</h3>
-          <p class="text-50 text-black no-margin">INTERMEDIATE</p>
+          <p class="text-md text-black no-margin difficulty">{{ route.get_difficulty_display }}</p>
         </div>
       </div>
     </div>
+  </div>
+  <div class="attribution-banner">
+    {% attribution route.summary_background_photo %}
   </div>
 </section>
 <section class="section-base">
@@ -114,268 +125,22 @@
     <div class="title align-center align-left-md">
       <h2>Recommended Itinerary</h2>
     </div>
-    <div class="row cnt-box cnt-call">
-      <div class="col-lg-4">
-        <div class="badge">
-          <h2>DAY 1</h2>
-          <div class="route-detail-item">
-            <i class="fas fa-map-marked-alt"></i><span>6 hrs / 9 km</span>
-          </div>
-          <div class="route-detail-item">
-            <i class="fas fa-home"></i><span>Yunleng cabin</span>
-          </div>
-          <div class="route-detail-item">
-            <i class="fas fa-tint"></i><span>Available from faucets at the Yunleng cabin, very reliable</span>    
-          </div>
-          <hr class="space-xs" />
-          <div class="grid-list list-gallery" data-lightbox-anima="fade-top" data-columns="3">
-            <div class="grid-box">
-              <div class="grid-item">
-                <a class="img-box" href="image.jpg">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="https://www.youtube.com/watch?v=Lb4IcGF5iTQ">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-            </div>
-          </div>   
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="panel">
-          <h3 class="timeline-title">Shengguang trailhead to Yunleng cabin</h3>
-          <hr class="space-xs" />
-          <div class="route-points">
-            <span class="route-point"><i class="fas fa-hiking"></i>&nbsp;Shengguang</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point">6.8k trailhead</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point">Mt. Duojiatun</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Yunleng cabin</span>
-          </div>
-          <hr class="space-xs" />
-          <p>
-            The trail begins on a bend in the number 7甲 highway near Shengguang 
-            (勝光). Ascend the farm road until you see ribbons marking a trail 
-            entering the forest near a concrete reservoir. After a steep ascent 
-            through forest the trail meets an abandoned road with Taroko 
-            National Park kilometer markers. Follow the road until the 6.8k 
-            marker where you'll find a large ancient cypress tree and basic 
-            toilets. From here the trail ascends steeply to the left up 
-            switchbacks until reaching a ridge line and making a right turn.
-            Continuing you'll cross over Mt. Duojiatun (多加屯) before a brief
-            descent to the Yunleng Cabin (雲稜山莊).
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row cnt-box cnt-call">
-      <div class="col-lg-4">
-        <div class="badge">
-          <h2>DAY 2</h2>
-          <div class="route-detail-item">
-            <i class="fas fa-map-marked-alt"></i><span>5 hrs / 9 km</span>
-          </div>
-          <div class="route-detail-item">
-            <i class="fas fa-home"></i><span>Nanhu cabin</span>
-          </div>
-          <div class="route-detail-item">
-            <i class="fas fa-tint"></i><span>Creek near Nanhu cabin, very reliable</span>    
-          </div>
-          <hr class="space-xs" />
-          <div class="grid-list list-gallery" data-lightbox-anima="fade-top" data-columns="3">
-            <div class="grid-box">
-              <div class="grid-item">
-                <a class="img-box" href="image.jpg">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="https://www.youtube.com/watch?v=Lb4IcGF5iTQ">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="panel">
-          <h3 class="timeline-title">Yunleng cabin to Nanhu cabin</h3>
-          <hr class="space-xs" />
-          <div class="route-points">
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Yunleng cabin</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Mt. Shenmazhen</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Nanhu North Mt.</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Nanhu cabin</span>
-          </div>
-          <hr class="space-xs" />
-          <p>
-            Departing the Yunleng Cabin the trail descends into a ravine before 
-            beginning a steady 1000m ascent through forest and alpine 
-            meadows. After about 2 hours you'll reach the intersection to Mt.
-            Shenmazhen (審馬陣山), the first top 100 peak of the trail. The
-            peak marker is about a 5 minute detour from the main trail with
-            less-than-impressive views. After another 90 minutes you'll reach
-            the top of the ridge line and intersection to the Nanhu North 
-            Mountain (南湖北山), another 5 minute detour. From here the next 
-            kilometer of trail crosses a dramatic ridge with fixed ropes and 
-            sheer drops before reaching the Mt. Nanhu North Peak (南湖北峰), 
-            the second top 100 peak of the hike. Carefully descend the scree 
-            slope into the valley and you'll arrive at the Nanhu Cabin
-            (南湖山莊).
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row cnt-box cnt-call">
-      <div class="col-lg-4">
-        <div class="badge">
-          <h2>DAY 3</h2>
-          <div class="route-detail-item">
-            <i class="fas fa-map-marked-alt"></i><span>7.5 hrs / 13 km</span>
-          </div>
-          <div class="route-detail-item">
-            <i class="fas fa-home"></i><span>Yunleng cabin</span>
-          </div>
-          <div class="route-detail-item">
-            <i class="fas fa-tint"></i><span>Available from faucets at the Yunleng cabin, very reliable</span>    
-          </div>
-          <hr class="space-xs" />
-          <div class="grid-list list-gallery" data-lightbox-anima="fade-top" data-columns="3">
-            <div class="grid-box">
-              <div class="grid-item">
-                <a class="img-box" href="image.jpg">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="https://www.youtube.com/watch?v=Lb4IcGF5iTQ">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-              <div class="grid-item">
-                <a class="img-box" href="video.mp4">
-                  <img src="https://themekit.dev/shared/thumbs/wide.png">
-                </a>
-              </div>
-            </div>
-          </div>   
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="panel">
-          <h3 class="timeline-title">Summit and return to Yunleng cabin</h3>
-          <hr class="space-xs" />
-          <div class="route-points">
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Nanhu cabin</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Mt. Nanhu</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Nanhu E. Peak</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Nanhu cabin</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Nanhu North Mt.</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Mt. Shenmazhen</span><i class="fas fa-arrow-right route-point-spacer"></i>           
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Yunleng cabin</span>
-          </div>
-          <hr class="space-xs" />
-          <p>
-            An early start is required if you'd like to see sunrise from the
-            summit. From the cabin follow valley along the left side of Mt. 
-            Nanhu. After a steady climb the you'll reach a saddle where the 
-            trail splits between the main and south peaks. Follow the signs to 
-            the main peak. After a short scramble you'll reach the Mt. Nanhu
-            main peak summit at 3742m (南湖主峰). If you're not summiting the 
-            east peak you can return to the Nanhu Cabin following the same 
-            route, otherwise return to the saddle and follow the signs toward
-            Nanhu East Peak (南湖東峰). The east peak climb is a scramble up 
-            a steep scree slope and it may be difficult locate a trail.
-            Eventually you'll reach the east peak at 3632m. Return to the 
-            saddle and follow signs back to the Nanhu Cabin. From here it's a 
-            steep, slow climb over scree back to the north peak. Return along 
-            your original route to the Yunleng Cabin.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row cnt-box cnt-call">
-      <div class="col-lg-4">
-        <div class="badge">
-          <h2>DAY 4</h2>
-          <div class="route-detail-item">
-            <i class="fas fa-map-marked-alt"></i><span>5 hrs / 9 km</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="panel">
-          <h3 class="timeline-title">Yunleng cabbin to Shengguang</h3>
-          <hr class="space-xs" />
-          <div class="route-points">
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Yunleng cabin</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Mt. Shenmazhen</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-mountain"></i>&nbsp;Nanhu North Mt.</span><i class="fas fa-arrow-right route-point-spacer"></i>
-            <span class="route-point"><i class="fas fa-home"></i>&nbsp;Nanhu cabin</span>
-          </div>
-          <hr class="space-xs" />
-          <p>
-            From the Yunleng Cabin return along the original route over Mt. 
-            Duojiatun, descending to the forest road 6.8k trailhead. If 
-            returning to Shengguang be careful not to miss the junction into 
-            the forest around the 4.8k marker. 
-          </p>
-        </div>
-      </div>
-    </div>
+    {% for day in route.itineraries.all %}
+    {% include "routes/_components/itinerary_day.html" with day=day %}
+    {% endfor %}
   </div>
 </section>
+{% if route.gpx %}
 <section class="section-base section-color route-detail-map section-google-map">
-  <div class="google-map" data-coords="46.01049736894874,11.22314543457037"></div>
+  <div id="leaflet">  
+    <a class="leaflet-right leaflet-top btn-gpx-download btn btn-sm btn-border full-width-sm" href="{{ route.gpx.url }}">
+      <i class="fas fa-file-download"></i>&nbsp;
+      Download GPX
+    </a>
+  </div>
 </section>
+{% endif %}
+{% if route.cabins.count %}
 <section class="section-base">
   <div class="container">
     <div class="title align-center align-left-md">
@@ -383,79 +148,19 @@
     </div>
     <div class="tab-box" data-tab-anima="fade-in">
       <ul class="tab-nav align-center">
-        <li class="active"><a href="#">Yunleng Cabin</a></li>
-        <li><a href="#">Nanhu Cabin</a></li>
+        {% for cabin in route.cabins.all %}
+        <li {% if forloop.first %}class="active"{% endif %}>
+          <a href="#">{{ cabin.cabin.name }}</a>
+        </li>
+        {% endfor %}
       </ul>
-      <div class="panel active">
-        <div class="row">
-          <div class="col-lg-6">
-            <a class="img-box lightbox" href="http://via.placeholder.com/800x500" data-lightbox-anima="fade-in">
-              <img src="http://via.placeholder.com/800x500" alt="">
-            </a>
-          </div>
-          <div class="col-lg-6">
-            <div class="title">
-              <h3>Yunleng Cabin</h3>
-              <p>雲稜山莊</p>
-            </div>
-            <p>
-              Modern cabin with solar power, running water, and toilets. 
-              Reservations are made via the national park permit system when you
-              apply for park entry permits. Bookings are first come, first 
-              serve.
-            </p>
-            <table class="table table-grid table-border align-left text-bold table-10">
-              <tbody>
-                <tr>
-                  <td>55 beds</td>
-                  <td>2615 m</td>
-                  <td>24.3783°N 121.3969°E</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="row">
-          <div class="col-lg-6">
-            <a 
-              class="img-box lightbox" 
-              href="http://via.placeholder.com/800x500"
-              data-lightbox-anima="fade-in"
-              data-options="mainClass:inner,type:image"
-              title="<a href='#'>linky</a>"
-            >
-              <img src="http://via.placeholder.com/800x500" alt="">
-            </a>
-          </div>
-          <div class="col-lg-6">
-            <div class="title">
-              <h3>Nanhu cabin</h3>
-              <p>南湖山屋</p>
-            </div>
-            <p>
-              Modern A-frame with solar power and basic toilets located in the
-              Nanhu lower cirque. Water is readily available from a nearby 
-              stream. Reservations are made via the national park permit system 
-              when you apply for park entry permits. Bookings are first come, 
-              first serve.
-            </p>
-            <table class="table table-grid table-border align-left text-bold table-10">
-              <tbody>
-                <tr>
-                  <td>40 beds</td>
-                  <td>3380 m</td>
-                  <td>24.3783°N 121.3969°E</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      {% for cabin in route.cabins.all %}
+      {% include "routes/_components/cabin.html" with cabin=cabin.cabin active=forloop.first %}
+      {% endfor %}
     </div>
   </div>
 </section>
+{% endif %}
 <section class="section-base section-color">
   <div class="container route-detail-practical">
     <div class="title align-center align-left-md">
@@ -507,5 +212,113 @@
       </div>
     </div>
 </section>
+{% endblock %}
 
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    $('.route-carousel li').magnificPopup({
+      delegate: '.img-box',
+      type: 'image',
+      tLoading: 'Loading image #%curr%...',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+        preload: [0,1]
+      }
+    });
+  });   
+</script>
+{% if route.gpx %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.4.0/gpx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
+<script>
+var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+var ocmLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+
+var map = new L.Map('leaflet', {
+  layers: [
+    new L.tileLayer(
+      'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+        attribution: '&copy; '+ mapLink + ' Contributors & ' + ocmLink,
+        maxZoom: 18,
+      }
+    )
+  ],
+  center: [0, 0],
+  zoom: 0
+});
+
+var redMarker = L.AwesomeMarkers.icon({
+    prefix: 'fas',
+    iconColor: 'white',
+    icon: 'coffee',
+    markerColor: 'red'
+  });
+      
+  L.marker([51.941196,4.512291], {icon: redMarker}).addTo(map);
+
+var gpx = '{{ route.gpx.url }}'; // URL to your GPX file or the GPX itself
+new L.GPX(gpx, {
+  async: true,
+  parseElements: ["track", "waypoint"],
+  marker_options: {
+    startIconUrl: null,
+    endIconUrl: null,
+    startIcon: null,
+    endIcon: null,
+    wptIcons: {
+      '': new L.AwesomeMarkers.icon({
+        icon: 'info-circle',
+        prefix: 'fa',
+        markerColor: 'purple',
+        iconColor: null
+      }),
+      'Water Source': new L.AwesomeMarkers.icon({
+        icon: 'tint',
+        prefix: 'fa',
+        markerColor: 'darkblue',
+        iconColor: null
+      }),
+      'Summit': new L.AwesomeMarkers.icon({
+        icon: 'mountain',
+        prefix: 'fa',
+        markerColor: 'darkred',
+        iconColor: null
+      }),
+      'Lodge': new L.AwesomeMarkers.icon({
+        icon: 'home',
+        prefix: 'fa',
+        markerColor: 'cadetblue',
+        iconColor: null
+      }),
+      'Trail Head': new L.AwesomeMarkers.icon({
+        icon: 'hiking',
+        prefix: 'fa',
+        markerColor: 'green',
+        iconColor: null
+      })
+    }
+  } 
+}).on('loaded', function(e) {
+  map.fitBounds(e.target.getBounds());
+}).on('addpoint', function(e) {
+  var popup = e.point.getPopup();
+  if (!popup) {
+    return;
+  }  
+  
+  var descEl = e.element.getElementsByTagName('desc');
+  var desc = '';
+  if (descEl.length > 0) {
+    desc = descEl[0].textContent;
+  }
+  desc = desc.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    
+  popup.setContent('<h3>'+e.point.options.title+'</h3><br/>'+desc);
+}).addTo(map);
+
+</script>
+{% endif %}
 {% endblock %}
