@@ -84,8 +84,6 @@ class FlickrUpdater:
         self.photo.attr_license = attr_license
         self.photo.attr_version = attr_version
 
-        print(info)
-
         self.photo.save()
 
 
@@ -109,20 +107,20 @@ class Photo(models.Model):
 
     @property
     def thumbnail_preview(self):
-        if not self.image:
+        try:
+            thumbnail = get_thumbnail(
+                self.image,
+                '200x200',
+                upscale=False,
+                quality=100
+            )
+            return format_html('<img src="{}" width="{}" height="{}">'.format(
+                thumbnail.url,
+                thumbnail.width,
+                thumbnail.height
+            ))
+        except TypeError:
             return None
-
-        thumbnail = get_thumbnail(
-            self.image,
-            '200x200',
-            upscale=False,
-            quality=100
-        )
-        return format_html('<img src="{}" width="{}" height="{}">'.format(
-            thumbnail.url,
-            thumbnail.width,
-            thumbnail.height
-        ))
 
     def __str__(self):
         if self.attr_title:
