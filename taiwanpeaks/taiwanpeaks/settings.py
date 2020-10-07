@@ -141,13 +141,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Flickr
+
 FLICKR_KEY = env('FLICKR_KEY', default='')
 FLICKR_SECRET = env('FLICKR_SECRET', default='')
-
-
-# Thumbnails
-
-THUMBNAIL_PREFIX = 'media/cache/'
 
 
 # Static files
@@ -179,6 +175,7 @@ if USE_S3:
     PUBLIC_MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'common.storage_backends.MediaRootS3Boto3Storage'
+
 
 
 # Logging
