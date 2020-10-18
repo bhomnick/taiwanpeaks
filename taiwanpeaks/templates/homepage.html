@@ -74,14 +74,11 @@
     </div>
   </div>
 </section>
-<section id="peaks" class="section-slider alpins-slider light section-full-width-left" data-slider-parallax="true">
-  <div class="background-slider">
-    <div class="active" style="background-image:url({% static 'media/img/homepage-peaks-banner.jpg' %})"></div>
-  </div>
+<section id="peaks" class="section-image alpins-slider light section-full-width-left ken-burn-center" data-parallax="scroll" data-image-src="{% static 'media/img/homepage-peaks-banner.jpg' %}">
   <div class="container">
     <div class="row">
       <div class="col-lg-6">
-        <ul class="slider" data-options="type:slider,nav:true,arrows:true,perView:3,perViewLg:2,perViewSm:1,gap:30,controls:out">
+        <ul class="slider" data-options="type:slider,nav:true,arrows:true,perView:3,perViewLg:2,perViewSm:1,gap:30,controls:out,autoheight:false">
           <li>
             {% include "_components/featured_peak.html" with name="Jade" ranking="1" height="3952" difficulty="BEGINNER" img_path="media/img/peak-jade.png" %}
             <hr class="space-xs">

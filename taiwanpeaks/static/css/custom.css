@@ -40,6 +40,23 @@ Table of contents
     border: 1px solid #379cf4 !important;
 }
 
+@media (max-width: 991.98px) {
+    body > nav {
+        height: 55px !important;
+    }
+}
+
+body > nav:before {
+    background-color: #379cf4;
+    height: 55px;
+}
+
+.menu-cnt > ul > li > a, body > nav .menu-brand,.menu-right,body > nav:not(.menu-fixed) > .container {
+    height: 55px !important;
+    line-height: 55px !important;
+    color: white;
+}
+
 /*
 # Homepage
 ===================================================================
@@ -50,6 +67,11 @@ Table of contents
 	margin: 5px 15px 15px 0;
 }
 
+@media (min-width: 1800px) {
+    #peaks .col-lg-6:first-child {
+        max-width: 850px;
+    }
+}
 
 /*
 # Route list
