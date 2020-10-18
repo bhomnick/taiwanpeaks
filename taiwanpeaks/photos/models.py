@@ -11,6 +11,7 @@ from django.utils.html import format_html
 
 import flickr_api
 from model_utils import Choices
+from model_utils.models import TimeStampedModel
 from sorl.thumbnail import ImageField, get_thumbnail
 from taggit.managers import TaggableManager
 
@@ -93,7 +94,7 @@ def uuid_photo_path(instance, filename):
     return os.path.join('photos', filename)
 
 
-class Photo(models.Model):
+class Photo(TimeStampedModel):
     image = ImageField(upload_to=uuid_photo_path, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     flickr_id = models.CharField(max_length=255, null=True, blank=True, unique=True)

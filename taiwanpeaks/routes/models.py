@@ -4,6 +4,7 @@ import uuid
 from django.db import models
 
 from model_utils import Choices
+from model_utils.models import TimeStampedModel
 
 from common import constants
 
@@ -24,7 +25,7 @@ ITINERARY_REST_CHOICES = Choices(
 )
 
 
-class Cabin(models.Model):
+class Cabin(TimeStampedModel):
     name = models.CharField(max_length=255)
     name_zh = models.CharField(max_length=255)
     description = models.TextField()
@@ -43,7 +44,7 @@ def route_gpx_path(instance, filename):
     return os.path.join('gpx', filename)
 
 
-class Route(models.Model):
+class Route(TimeStampedModel):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     name_zh = models.CharField(max_length=255)
@@ -73,11 +74,11 @@ class RouteItinerary(models.Model):
     day_no = models.IntegerField()
     total_distance = models.DecimalField(max_digits=3, decimal_places=1)
     total_hours = models.DecimalField(max_digits=3, decimal_places=1)
-    rest_name = models.CharField(max_length=255)
-    rest_type = models.CharField(max_length=50, choices=ITINERARY_REST_CHOICES)
+    rest_name = models.CharField(max_length=255, null=True, blank=True)
+    rest_type = models.CharField(max_length=50, choices=ITINERARY_REST_CHOICES, null=True, blank=True)
     water_desc = models.CharField(max_length=255, null=True, blank=True)
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['day_no']

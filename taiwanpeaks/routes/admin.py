@@ -33,6 +33,7 @@ class RouteCarouselPhotoInline(AdminImageMixin, admin.TabularInline):
 class RouteItineraryInline(admin.TabularInline):
     model = RouteItinerary
     ordering = ['day_no']
+    fields = ['day_no', 'total_distance', 'total_hours', 'title']
     show_change_link = True
 
 
@@ -44,6 +45,7 @@ class RouteCabinInline(admin.TabularInline):
 @admin.register(Route)
 class RouteAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+    raw_id_fields = ['header_background_photo', 'summary_background_photo']
     inlines = [RouteCarouselPhotoInline, RouteItineraryInline, RouteCabinInline]
 
 

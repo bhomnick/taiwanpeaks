@@ -17,7 +17,8 @@ class PhotoAdminForm(forms.ModelForm):
 
 @admin.register(Photo)
 class PhotoAdmin(DjangoObjectActions, AdminImageMixin, admin.ModelAdmin):
-    list_display = ['attr_title', 'attr_license', 'get_preview']
+    list_display = ['id', 'attr_title', 'description', 'tag_list', 'modified', 'get_preview']
+    list_filter = ['tags__name']
     search_fields = ['attr_title', 'tags__name']
     change_actions = ['update_from_flickr']
     form = PhotoAdminForm
@@ -40,3 +41,7 @@ class PhotoAdmin(DjangoObjectActions, AdminImageMixin, admin.ModelAdmin):
 
     def update_from_flickr(self, request, obj):
         obj.update_from_flickr()
+
+    def tag_list(self, obj):
+        return ', '.join([t.name for t in obj.tags.all()])
+    tag_list.short_description = 'Tags'
