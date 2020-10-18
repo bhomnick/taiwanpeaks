@@ -31,8 +31,8 @@ class Cabin(TimeStampedModel):
     description = models.TextField()
     capacity = models.IntegerField()
     altitude = models.IntegerField()
-    latitude = models.DecimalField(max_digits=12, decimal_places=8)
-    longitude = models.DecimalField(max_digits=12, decimal_places=8)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5)
     photo = models.ForeignKey('photos.Photo', related_name='cabins', on_delete=models.PROTECT)
 
     def __str__(self):
@@ -62,8 +62,8 @@ class Route(TimeStampedModel):
     gpx = models.FileField(upload_to=route_gpx_path, null=True, blank=True)
     np_permit_required = models.CharField(max_length=50, choices=constants.NP_CHOICES, null=True, blank=True)
     police_permit_required = models.BooleanField()
-    transportation_desc = models.TextField()
-    transportation_link = models.URLField()
+    transportation_desc = models.TextField(null=True, blank=True)
+    transportation_link = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name

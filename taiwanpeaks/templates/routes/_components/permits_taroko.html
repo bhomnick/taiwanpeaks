@@ -1,0 +1,27 @@
+<div class="caption">
+  <h3>Permits</h3>
+  <p>
+    {% if police_permit_required %}
+    Both a <strong>Taroko National Park Entry Permit</strong> and <strong>Police
+    Mountain Entry Permit</strong> are required for this route.
+    {% else %}
+    A <strong>Taroko National Park Entry Permit</strong> is required for this route.
+    {% endif %}
+  <hr class="space-xs" />
+  <p>
+    Park permits may be applied for online between 5 and 30 days ahead of your 
+    date of first entry.
+  </p>
+  {% if police_permit_required %}
+  <hr class="space-xs" />
+  <p>
+    Upon approval you will have the option to submit an application for a police 
+    permit via the national park entry permit sytem, or you may separately apply 
+    for one <a target="_blank" href="https://nv2.npa.gov.tw/NM107-604Client/">here</a> 
+    at least 3 days before your entry date.
+  </p>
+  {% endif %}
+</div>
+<div class="actions">
+  <a target="_blank" href="https://npm.cpami.gov.tw/en/apply_1.aspx" class="btn btn-xs">Apply here</a>
+</div>

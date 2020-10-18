@@ -7,9 +7,11 @@
       <div class="route-detail-item">
         <i class="fas fa-map-marked-alt"></i><span>{{ day.total_hours}} hrs / {{ day.total_distance }} km</span>
       </div>
+      {% if day.rest_name %}
       <div class="route-detail-item">
         <i class="fas {% if day.rest_type == 'cabin' %}fa-home{% else %}fa-campground{% endif %}"></i><span>{{ day.rest_name }}</span>
       </div>
+      {% endif %}
       {% if day.water_desc %}
       <div class="route-detail-item">
         <i class="fas fa-tint"></i><span>{{ day.water_desc }}</span>    
