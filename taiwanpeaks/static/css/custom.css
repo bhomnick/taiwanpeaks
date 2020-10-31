@@ -296,3 +296,15 @@ body > nav:before {
 .cabin-details .title h3 {
     display: inline-block;
 }
+
+.route-detail-peaks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.route-detail-peaks .route-detail-peak {
+    max-width: 330px;
+    min-width: 300px;
+    margin: 20px 10px;
+}

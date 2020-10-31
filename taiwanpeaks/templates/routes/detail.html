@@ -26,23 +26,6 @@
 {% endblock %}
 
 {% block content %}
-<!--
-<section class="section-color">
-<div class="container route-detail-top-container">
-  <div class="row align-center route-detail-menu">
-    <div class="menu-inner">
-      <ul>
-        <li><a href="#">Top</a></li>
-        <li><a href="#">Details</a></li>
-        <li><a href="#">Itinerary</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Practicalities</a></li>
-      </ul>
-    </div>
-  </div>
-</section>
--->
-
 <section class="section-base">
   <div class="container">
     <div class="row">
@@ -140,6 +123,29 @@
   </div>
 </section>
 {% endif %}
+
+{% if route.route_peaks.count %}
+<section class="section-base section-color">
+  <div class="container">
+    <div class="title align-center align-left-md">
+      <h2>Top 100 Peaks</h2>
+      <p>Covered by this route</p>
+    </div>
+    <div class="route-detail-peaks">
+      {% for route_peak in route.route_peaks.all %}
+      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 {% if route.cabins.count %}
 <section class="section-base">
   <div class="container">
@@ -177,6 +183,8 @@
           </div>
           {% elif route.np_permit_required == 'taroko' %}
           {% include "routes/_components/permits_taroko.html" with police_permit_required=route.police_permit_required %}
+          {% elif route.np_permit_required == 'sheipa' %}
+          {% include "routes/_components/permits_sheipa.html" %}
           {% endif %}
         </div>
       </div>

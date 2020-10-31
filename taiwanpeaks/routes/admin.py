@@ -3,7 +3,8 @@ from django.contrib import admin
 from sorl.thumbnail.admin import AdminImageMixin
 
 from .models import Route, RouteCarouselPhoto, RouteItinerary, \
-    RouteItineraryPhoto, RouteItineraryPoint, RouteCabin, Cabin
+    RouteItineraryPhoto, RouteItineraryPoint, RouteCabin, Cabin, \
+    RoutePeak
 
 
 @admin.register(Cabin)
@@ -42,11 +43,17 @@ class RouteCabinInline(admin.TabularInline):
     ordering = ['order']
 
 
+class RoutePeakInline(admin.TabularInline):
+    model = RoutePeak
+    ordering = ['order']
+
+
 @admin.register(Route)
 class RouteAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     raw_id_fields = ['header_background_photo', 'summary_background_photo']
-    inlines = [RouteCarouselPhotoInline, RouteItineraryInline, RouteCabinInline]
+    inlines = [RouteCarouselPhotoInline, RouteItineraryInline, RouteCabinInline,
+               RoutePeakInline]
     filter_horizontal = ['locations']
 
 

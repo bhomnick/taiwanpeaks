@@ -1,0 +1,16 @@
+{% load thumbnail photos %}
+
+<div class="route-detail-peak">
+  <div class="cnt-box cnt-box-info boxed">
+    {% thumbnail peak.list_photo.image "800x500" crop="center" as im_small %}
+    <img src="{{ im_small.url }}" alt="{{ peak.name }}" />
+    {% endthumbnail %}
+    <div class="caption">
+      <h2>{{ peak.name }}</h2>
+      <div class="cnt-info">
+        <div><span>Height</span><span>{{ peak.height }}m</span></div>
+        <div><span>Rank</span><span>#{{ peak.rank }}</span></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -100,17 +100,26 @@ class RouteItineraryPoint(models.Model):
     type = models.CharField(max_length=50, choices=ROUTE_POINT_CHOICES, null=True, blank=True)
     order = models.IntegerField()
 
+    class Meta:
+        ordering = ['order']
+
 
 class RouteItineraryPhoto(models.Model):
     route_itinerary = models.ForeignKey('RouteItinerary', on_delete=models.PROTECT, related_name='photos')
     photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='route_itineraries')
     order = models.IntegerField()
 
+    class Meta:
+        ordering = ['order']
+
 
 class RouteCabin(models.Model):
     route = models.ForeignKey('Route', on_delete=models.PROTECT, related_name='cabins')
     cabin = models.ForeignKey('Cabin', on_delete=models.PROTECT, related_name='routes')
     order = models.IntegerField()
+
+    class Meta:
+        ordering = ['order']
 
 
 class RouteCarouselPhoto(models.Model):
@@ -120,3 +129,14 @@ class RouteCarouselPhoto(models.Model):
 
     class Meta:
         unique_together = ['route', 'photo']
+        ordering = ['order']
+
+
+class RoutePeak(models.Model):
+    route = models.ForeignKey('Route', on_delete=models.PROTECT, related_name='route_peaks')
+    peak = models.ForeignKey('peaks.Peak', on_delete=models.PROTECT, related_name='routes')
+    order = models.IntegerField()
+
+    class Meta:
+        unique_together = ['route', 'peak']
+        ordering = ['order']
