@@ -277,7 +277,7 @@ body > nav:before {
 .route-detail-practical .actions {
     text-align: center;
     padding-left: 30px;
-    width: 200px;
+    min-width: 180px;
 }
 
 .route-detail-banner .difficulty {
