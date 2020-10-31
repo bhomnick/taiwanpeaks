@@ -1,6 +1,6 @@
 {% load thumbnail photos %}
 
-<div class="panel {% if active %}active{% endif %}">
+<div class="panel {% if active %}active{% endif %} cabin-details">
   <div class="row">
     <div class="col-lg-6">
       {% thumbnail cabin.photo.image "1920x1080" as im_full %}
@@ -9,12 +9,14 @@
         <img src="{{ im_small.url }}" alt="">
       </a>
       {% endthumbnail %}
-      {% endthumbnail %}  
+      {% endthumbnail %}
     </div>
     <div class="col-lg-6">
       <div class="title">
         <h3>{{ cabin.name }}</h3>
-        <p>{{ cabin.name_zh }}</p>
+        {% if cabin.booking_link %}<a target="_blank" href="{{ cabin.booking_link }}" class="btn btn-xs booking-link">Book Here</a>{% endif %}
+        <br /><p>{{ cabin.name_zh }}</p>
+
       </div>
       <p>
         {{ cabin.description }}
@@ -22,9 +24,18 @@
       <table class="table table-grid table-border align-left text-bold table-10">
         <tbody>
           <tr>
-            <td>{{ cabin.capacity }} beds</td>
+            <td>
+              {% if cabin.capacity_beds %}
+              {{ cabin.capacity_beds }} beds
+              {% if cabin.capacity_tents %}
+              <br />
+              {% endif %}
+              {% endif %}
+              {% if cabin.capacity_tents %}
+              {{ cabin.capacity_tents }} tents
+              {% endif %}            
             <td>{{ cabin.altitude }} m</td>
-            <td>{{ cabin.latitude }}°N {{ cabin.longitude }}°E</td>
+            <td>{{ cabin.latitude }}°N <br />{{ cabin.longitude }}°E</td>
           </tr>
         </tbody>
       </table>

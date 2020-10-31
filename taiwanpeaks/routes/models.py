@@ -29,11 +29,13 @@ class Cabin(TimeStampedModel):
     name = models.CharField(max_length=255)
     name_zh = models.CharField(max_length=255)
     description = models.TextField()
-    capacity = models.IntegerField()
+    capacity_beds = models.IntegerField(null=True, blank=True)
+    capacity_tents = models.IntegerField(null=True, blank=True)
     altitude = models.IntegerField()
     latitude = models.DecimalField(max_digits=8, decimal_places=5)
     longitude = models.DecimalField(max_digits=8, decimal_places=5)
     photo = models.ForeignKey('photos.Photo', related_name='cabins', on_delete=models.PROTECT)
+    booking_link = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -54,7 +56,7 @@ class Route(TimeStampedModel):
     total_distance = models.IntegerField( )
     days_required = models.IntegerField()
     peak_count = models.IntegerField()
-    location = models.CharField(max_length=50, choices=constants.NP_CHOICES)
+    locations = models.ManyToManyField('common.Location')
     public_transport_accessible = models.BooleanField()
     cabin_status = models.CharField(max_length=50, choices=CABIN_STATUS_CHOICES)
     header_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='header_background_routes')
@@ -62,11 +64,16 @@ class Route(TimeStampedModel):
     gpx = models.FileField(upload_to=route_gpx_path, null=True, blank=True)
     np_permit_required = models.CharField(max_length=50, choices=constants.NP_CHOICES, null=True, blank=True)
     police_permit_required = models.BooleanField()
+    custom_permit_info = models.TextField(null=True, blank=True)
     transportation_desc = models.TextField(null=True, blank=True)
     transportation_link = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def location_list_short(self):
+        return [l.name_short for l in self.locations.all()]
 
 
 class RouteItinerary(models.Model):

@@ -64,11 +64,17 @@
           <li><b>Total distance</b><hr /><p>{{ route.total_distance }} km</p></li>
           <li><b>Days required</b><hr /><p>{{ route.days_required }}</p></li>
           <li><b>Top 100 peaks</b><hr /><p>{{ route.peak_count }}</p></li>
-          <li><b>Location</b><hr /><p>{{ route.get_location_display }}</p></li>
+          <li><b>Locations</b><hr /><p>{{ route.location_list_short|join:' // ' }}</p></li>
           <li><b>Public transport</b><hr /><p>{% if route.public_transport_accessible %}Yes{% else %}No{% endif %}</p></li>
           <li><b>Permits</b><hr /><p>
             {% if route.np_permit_required %}
-            Park
+            National Park
+            {% if route.police_permit_required %}
+            and 
+            {% endif %}
+            {% endif %}
+            {% if route.police_permit_required %}
+            Police
             {% endif %}
           </p></li>
           <li><b>Cabins</b><hr /><p>{{ route.get_cabin_status_display }}</p></li>
@@ -170,21 +176,13 @@
       <div class="col-lg-10 cnt-box cnt-call">
         <div class="icon-box icon-box-left">
           <i class="fas fa-tasks"></i>
-          {% if route.np_permit_required == 'taroko' %}
+          {% if route.custom_permit_info %}
+          <div>
+            {{ route.custom_permit_info|safe }}
+          </div>
+          {% elif route.np_permit_required == 'taroko' %}
           {% include "routes/_components/permits_taroko.html" with police_permit_required=route.police_permit_required %}
           {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-10 cnt-box cnt-call">
-        <div class="icon-box icon-box-left">
-          <i class="fas fa-home"></i>
-          <div class="caption">
-            <h3>Cabin Bookings</h3>
-            <p>Cabins for this route are reserved via the national park entry
-            permit application system.</p>
-          </div>
         </div>
       </div>
     </div>

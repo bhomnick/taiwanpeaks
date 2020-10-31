@@ -268,6 +268,23 @@ body > nav:before {
     padding-left: 30px;
 }
 
+.route-detail-practical .icon-box-left > div {
+    text-align: left;
+}
+
 .route-detail-banner .difficulty {
     line-height: 70px;
+}
+
+.cabin-details .booking-link {
+    float: right;
+    margin: 15px 15px 0 0;
+}
+
+.cabin-details .title {
+    margin-bottom: 20px;
+}
+
+.cabin-details .title h3 {
+    display: inline-block;
 }

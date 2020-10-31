@@ -47,6 +47,7 @@ class RouteAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     raw_id_fields = ['header_background_photo', 'summary_background_photo']
     inlines = [RouteCarouselPhotoInline, RouteItineraryInline, RouteCabinInline]
+    filter_horizontal = ['locations']
 
 
 class RouteItineraryPhotoInline(AdminImageMixin, admin.TabularInline):
