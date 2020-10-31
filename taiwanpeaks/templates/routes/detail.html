@@ -177,7 +177,8 @@
         <div class="icon-box icon-box-left">
           <i class="fas fa-tasks"></i>
           {% if route.custom_permit_info %}
-          <div>
+          <div class="caption">
+            <h3>Permits</h3>
             {{ route.custom_permit_info|safe }}
           </div>
           {% elif route.np_permit_required == 'taroko' %}

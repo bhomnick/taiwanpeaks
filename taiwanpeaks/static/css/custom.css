@@ -263,13 +263,21 @@ body > nav:before {
     font-size: 14px;
 }
 
-.route-detail-practical .actions {
-    text-align: left;
-    padding-left: 30px;
+.route-detail-practical .caption {
+    max-width: 100%;
 }
 
-.route-detail-practical .icon-box-left > div {
-    text-align: left;
+.route-detail-practical .cnt-call .caption a.btn {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-top: 0;
+}
+
+.route-detail-practical .actions {
+    text-align: center;
+    padding-left: 30px;
+    width: 200px;
 }
 
 .route-detail-banner .difficulty {
