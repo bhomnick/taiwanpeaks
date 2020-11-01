@@ -65,9 +65,13 @@ class FlickrUpdater:
 
     def set_image(self):
         sizes = self.flickr_photo.getSizes()
+
         if 'Large 2048' not in sizes:
-            raise ValueError('Photo does not have a "Large 2048" size avaialble.')
-        url = sizes['Large 2048']['source']
+            size = 'Original'
+        else:
+            size = 'Large 2048'
+
+        url = sizes[size]['source']
 
         name = urlparse(url).path.split('/')[-1]
         content = ContentFile(urlopen(url).read())
