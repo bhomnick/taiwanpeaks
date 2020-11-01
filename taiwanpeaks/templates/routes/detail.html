@@ -291,7 +291,7 @@ new L.GPX(gpx, {
     }
   } 
 }).on('loaded', function(e) {
-  map.fitBounds(e.target.getBounds());
+  map.fitBounds(e.target.getBounds(), {padding: [30, 20]});
 }).on('addpoint', function(e) {
   var popup = e.point.getPopup();
   if (!popup) {
