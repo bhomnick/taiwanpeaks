@@ -227,11 +227,17 @@
 <script>
 var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 var ocmLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+var apiKey = '{{ map_api_key }}';
+var tileUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
+
+if (apiKey) {
+  tileUrl += '?apikey=' + apiKey;
+}
 
 var map = new L.Map('leaflet', {
   layers: [
     new L.tileLayer(
-      'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+      tileUrl, {
         attribution: '&copy; '+ mapLink + ' Contributors & ' + ocmLink,
         maxZoom: 18,
       }
@@ -241,15 +247,6 @@ var map = new L.Map('leaflet', {
   zoom: 0,
   scrollWheelZoom: false
 });
-
-var redMarker = L.AwesomeMarkers.icon({
-    prefix: 'fas',
-    iconColor: 'white',
-    icon: 'coffee',
-    markerColor: 'red'
-  });
-      
-  L.marker([51.941196,4.512291], {icon: redMarker}).addTo(map);
 
 var gpx = '{{ route.gpx.url }}'; // URL to your GPX file or the GPX itself
 new L.GPX(gpx, {
