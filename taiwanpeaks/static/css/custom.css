@@ -32,6 +32,14 @@ Table of contents
     color: white !important;
 }
 
+.header-sm {
+    height: 250px;
+}
+
+.header-sm > .container {
+    margin-top: 95px !important;
+}
+
 .leaflet-control a {
     color: #379cf4 !important;
 }
@@ -78,6 +86,11 @@ body > nav:before {
 ===================================================================
 */
 
+.route-list-container .no-results {
+    margin: 100px auto 0 auto;
+    display: none;
+}
+
 .route-list-filters select {
 	width: 100%;
 }
@@ -86,6 +99,10 @@ body > nav:before {
 	font-weight: bold;
 	display: block;
 	width: 100%;
+}
+
+.route-list-item {
+    margin-bottom: 20px;
 }
 
 .route-list-item h2 {
@@ -149,6 +166,10 @@ body > nav:before {
     transition: all .5s;
     transform: translateY(-50%) rotate(-270deg);
     text-transform: none;
+}
+
+.route-list-sorting a.active.desc:after {
+    transform: translateY(-50%) rotate(-90deg);
 }
 
 .route-list-sorting .menu-inner {

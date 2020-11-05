@@ -52,13 +52,14 @@ class Route(TimeStampedModel):
     name_zh = models.CharField(max_length=255)
     active = models.BooleanField(default=False)
     intro = models.TextField()
+    list_description = models.TextField(null=True, blank=True)
     difficulty = models.CharField(max_length=50, choices=constants.DIFFICULTY_CHOICES)
     total_distance = models.IntegerField( )
     days_required = models.IntegerField()
     peak_count = models.IntegerField()
     locations = models.ManyToManyField('common.Location')
     public_transport_accessible = models.BooleanField()
-    cabin_status = models.CharField(max_length=50, choices=CABIN_STATUS_CHOICES)
+    cabin_status = models.CharField(null=True, blank=True, max_length=50, choices=CABIN_STATUS_CHOICES)
     header_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='header_background_routes')
     summary_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='summary_background_routes')
     gpx = models.FileField(upload_to=route_gpx_path, null=True, blank=True)
@@ -74,6 +75,36 @@ class Route(TimeStampedModel):
     @property
     def location_list_short(self):
         return [l.name_short for l in self.locations.all()]
+
+    @property
+    def difficulty_index(self):
+        return constants.DIFFICULTY_CHOICES.index_of(self.difficulty)
+
+    @property
+    def filter_tags(self):
+        # Level
+        tags = [f'filter-level-{self.difficulty}']
+
+        # Duration
+        if self.days_required == 1:
+            days = '1'
+        elif self.days_required <= 3:
+            days = '2to3'
+        elif self.days_required <= 6:
+            days = '4to6'
+        else:
+            days = '7plus'
+        tags.append(f'filter-duration-{days}')
+
+        # Public transport
+        if self.public_transport_accessible:
+            tags.append('filter-publictransport-yes')
+
+        # Cabins
+        if self.cabin_status:
+            tags.append(f'filter-cabins-{self.cabin_status}')
+
+        return tags
 
 
 class RouteItinerary(models.Model):

@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 
-{% load static %}
+{% load static photos thumbnail %}
 
 {% block header %}
-<header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{% static 'media/img/homepage-banner.jpg' %}" data-offset="0">
+{% slug_photo "header-1" as header_photo %}
+{% thumbnail header_photo.image "1920x1080" crop="center" as im %}
+<header class="header-image header-sm ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
   <div class="container">
     <h1>Route Guides</h1>
   </div>
+  <div class="attribution-banner">
+    {% attribution header_photo %}
+  </div>
 </header>
+{% endthumbnail %}
 {% endblock %}
 
 {% block content %}
@@ -16,98 +22,251 @@
 		<div class="row">
       <div class="col-lg-2 route-list-filters">
         <form class="form form-box">		    
-          <div class="route-list-checkbox-group">
+          <div class="route-list-checkbox-group" data-group="level">
             <h4>Level</h4>
             <div class="form-checkbox">
-              <input type="checkbox" id="level-beginner">
+              <input type="checkbox" id="level-beginner" value=".filter-level-beginner">
               <label for="level-beginner">Beginner</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="level-intermediate">
-              <label for="level-itermediate">Intermediate</label>
+              <input type="checkbox" id="level-intermediate" value=".filter-level-intermediate">
+              <label for="level-intermediate">Intermediate</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="level-advanced">
+              <input type="checkbox" id="level-advanced" value=".filter-level-advanced">
               <label for="level-advanced">Advanced</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="level-expert">
+              <input type="checkbox" id="level-expert" value=".filter-level-expert">
               <label for="level-expert">Expert</label>
             </div>
           </div>
           
-          <div class="route-list-checkbox-group">
+          <div class="route-list-checkbox-group" data-group="duration">
             <h4>Duration</h4>
             <div class="form-checkbox">
-              <input type="checkbox" id="duration-1">
+              <input type="checkbox" id="duration-1" value=".filter-duration-1">
               <label for="duration-1">1 day</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="duration-2_3">
+              <input type="checkbox" id="duration-2_3" value=".filter-duration-2to3">
               <label for="duration-2_3">2-3 days</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="duration-4_6">
+              <input type="checkbox" id="duration-4_6" value=".filter-duration-4to6">
               <label for="duration-4_6">4-6 days</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="duration-7">
+              <input type="checkbox" id="duration-7" value=".filter-duration-7plus">
               <label for="duration-7">7+ days</label>
             </div>
           </div>
        
-          <div class="route-list-checkbox-group">
+          <div class="route-list-checkbox-group" data-group="transport">
             <h4>Public Transport</h4>
             <div class="form-checkbox">
-              <input type="checkbox" id="public_transport-required">
-              <label for="public_transport-required">Required</label>
+              <input type="checkbox" id="public-transport-required" value=".filter-publictransport-yes">
+              <label for="public-transport-required">Required</label>
             </div>
           </div>
           
-          <div class="route-list-checkbox-group">
+          <div class="route-list-checkbox-group" data-group="cabins">
             <h4>Cabins</h4>
             <div class="form-checkbox">
-              <input type="checkbox" id="cabins-camping">
+              <input type="checkbox" id="cabins-camping" value=".filter-cabins-none">
               <label for="cabins-camping">Camping only</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="cabins-mixed">
+              <input type="checkbox" id="cabins-mixed" value=".filter-cabins-mixed">
               <label for="cabins-mixed">Cabins/camping</label>
             </div>
             <div class="form-checkbox">
-              <input type="checkbox" id="cabins-only">
+              <input type="checkbox" id="cabins-only" value=".filter-cabins-full">
               <label for="cabins-only">Cabins only</label>
             </div>
           </div>
           
-          <a class="text-xs" href="#">clear filters</a>
+          <a class="text-xs clear-filters" href="#">clear filters</a>
         </form>
       </div>
       <div class="col-lg-10">
         <div class="row">
           <div class="route-list-sorting">
-            <span class="text-sm text-bold">Showing 12 of 24 routes&nbsp;&nbsp;<a href="#">show all</a></span>
+            <span class="text-sm text-bold">Showing <span class="route-list-count">{{ routes|length }}</span> of {{ routes|length }} routes&nbsp;&nbsp;<a class="clear-filters" href="#">show all</a></span>
             <div class="menu-inner">
-              <ul>
+              <ul class="sort-links">
                 <li class="route-list-sorting-label">Sort by:</li>
-                <li><a class="active" data-filter="cat-2" href="#">Name</a></li>
-                <li><a data-filter="cat-3" href="#">Duration</a></li>
-                <li><a data-filter="cat-4" href="#">Level</a></li>
+                <li><a class="active sort-link" data-sort-by="name" href="#">Name</a></li>
+                <li><a class="sort-link" data-sort-by="duration" href="#">Duration</a></li>
+                <li><a class="sort-link" data-sort-by="level" href="#">Level</a></li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="grid-list" data-columns="1">
-            <div class="grid-box">
-              {% include "routes/_list_item.html" with name="North 1st section" duration="6-7 days" peaks="7" camp="1" cabins="1" difficulty="Intermediate" %}
-              {% include "routes/_list_item.html" with name="Jade 1 day ascent" duration="1 day" peaks="1" difficulty="Intermediate"%}
-              {% include "routes/_list_item.html" with name="South 3rd section" duration="10 days" peaks="5" camp="1" difficulty="Expert" %}
-            </div>
-          </div>
+        <div class="row route-list-container">
+          {% for route in routes %}
+            {% include "routes/_components/list_item.html" %}
+          {% endfor %}
+          <div class="cnt-call no-results">No results found. Try <a href="#" class="clear-filters">clearing filters</a>.</div>
         </div>
       </div>
     </div>
 	</div>
 </section>
+<section class="section-base section-color">
+<div class="container">
+  <div class="cnt-box cnt-call">
+      <i class="im-paper-plane"></i>
+      <div class="caption">
+          <h2>Something missing?</h2>
+          <p>We're continually adding new routes and welcome submissions from the community. If you'd like to contribute please <a href="mailto:info@peaks.tw">get in touch</a>.</p>
+          <a href="mailto:info@peaks.tw" class="btn btn-xs">Get in Touch</a>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+var $container;
+var filters = {};
+
+$(function(){
+  $container = $('.route-list-container');
+  $container.isotope({
+    itemSelector: '.route-list-item',
+    getSortData: {
+      name: '.sort-name',
+      level: '[data-sort-level]',
+      duration: '.sort-duration'
+    },
+    sortBy: 'name'
+  });
+
+  $container.on('arrangeComplete', function(e, filteredItems) {
+    $('.route-list-count').text(filteredItems.length);
+    if (filteredItems.length == 0) {
+      $('.no-results').fadeIn(200);
+    } else {
+      $('.no-results').hide();
+    }
+  });
+
+  $('.clear-filters').on('click', function(e) {
+    e.preventDefault();
+    clearFilters();
+  })
+
+  $('.sort-link').on('click', function(e) {
+    $link = $(e.target);
+    var isActive = $link.hasClass('active');
+    var isDesc = isActive && $link.hasClass('desc');
+    var newClass; 
+    
+    if (!isActive || isDesc) {
+      newClass = 'active';
+    } else {
+      newClass = 'active desc';
+    }
+    
+    $('.sort-links').find('a').removeClass('active desc');
+    $link.addClass(newClass);
+    
+    $container.isotope({
+      sortBy: $link.data('sort-by'),
+      sortAscending: !isActive || isDesc
+    });
+  });
+
+  $('.route-list-filters').on('change', function(e) {
+    var $checkbox = $(e.target);
+    manageCheckbox($checkbox);
+    var comboFilter = getComboFilter(filters);
+    $('.no-results').hide();
+    $container.isotope({filter: comboFilter});
+  });
+});
+
+function clearFilters() {
+  $('.route-list-filters').find('input[type=checkbox]').prop('checked', false);
+  filters = {};
+  $('.route-list-filters').trigger('change');
+}
+
+function getComboFilter(filters) {
+  var i = 0;
+  var comboFilters = [];
+
+  for (var prop in filters) {
+    var filterGroup = filters[prop];
+    // skip to next filter group if it doesn't have any values
+    if (!filterGroup.length) {
+      continue;
+    }
+    if (i === 0) {
+      // copy to new array
+      comboFilters = filterGroup.slice(0);
+    } else {
+      var filterSelectors = [];
+      // copy to fresh array
+      var groupCombo = comboFilters.slice(0); // [ A, B ]
+      // merge filter Groups
+      for (var k = 0, len3 = filterGroup.length; k < len3; k++) {
+        for (var j = 0, len2 = groupCombo.length; j < len2; j++) {
+          filterSelectors.push(groupCombo[j] + filterGroup[k]); // [ 1, 2 ]
+        }
+
+      }
+      // apply filter selectors to combo filters for next group
+      comboFilters = filterSelectors;
+    }
+    i++;
+  }
+
+  var comboFilter = comboFilters.join(', ');
+  return comboFilter;
+}
+
+function manageCheckbox($checkbox) {
+  var checkbox = $checkbox[0];
+
+  var group = $checkbox.parents('.route-list-checkbox-group').attr('data-group');
+  // create array for filter group, if not there yet
+  var filterGroup = filters[group];
+  if (!filterGroup) {
+    filterGroup = filters[group] = [];
+  }
+
+  var isAll = $checkbox.hasClass('all');
+  // reset filter group if the all box was checked
+  if (isAll) {
+    delete filters[group];
+    if (!checkbox.checked) {
+      checkbox.checked = 'checked';
+    }
+  }
+  
+  // index of
+  var index = $.inArray(checkbox.value, filterGroup);
+
+  if (checkbox.checked) {
+    var selector = isAll ? 'input' : 'input.all';
+    $checkbox.siblings(selector).removeAttr('checked');
+
+
+    if (!isAll && index === -1) {
+      // add filter to group
+      filters[group].push(checkbox.value);
+    }
+
+  } else if (!isAll) {
+    // remove filter from group
+    filters[group].splice(index, 1);
+    // if unchecked the last box, check the all
+    if (!$checkbox.siblings('[checked]').length) {
+      $checkbox.siblings('input.all').attr('checked', 'checked');
+    }
+  }
+}
+</script>
 {% endblock %}

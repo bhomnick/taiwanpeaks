@@ -1,0 +1,34 @@
+{% load thumbnail %}
+
+<div 
+  class="route-list-item cnt-box cnt-box-blog-side boxed {{ route.filter_tags|join:' ' }}" 
+  data-href="{% url 'routes-detail' slug=route.slug %}"
+  data-sort-level="{{ route.difficulty_index }}"
+>
+  <a href="{% url 'routes-detail' slug=route.slug %}" class="img-box">
+    {% thumbnail route.header_background_photo.image "800x500" crop="center" as im_small %}
+    <img src="{{ im_small.url }}" alt="{{ route.name }}" />
+    {% endthumbnail %}
+  </a>
+  <div class="caption">
+    <div>
+      <h2 class="align-left"><span class="sort-name">{{ route.name }}</span></h2>
+      <span class="align-right extra-field">{{ route.get_difficulty_display }}</span>
+    </div>
+    <div>
+      <p>
+        {{ route.list_description }}
+      </p>
+      <ul class="icon-list icon-list-horizontal">
+        <li class="sort-duration"><i class="fas fa-calendar-alt text-xs"></i>{{ route.days_required }} days</li>
+        <li><i class="fas fa-mountain text-xs"></i>{{ route.peak_count }} peaks</li>
+        {% if route.cabin_status %}
+        <li><i class="fas fa-campground text-xs"></i>{{ route.get_cabin_status_display }}</li>
+        {% endif %}
+        {% if route.public_transport_accessible %}
+        <li><i class="fas fa-bus"></i>Accessible</li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>

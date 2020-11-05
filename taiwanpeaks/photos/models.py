@@ -100,6 +100,8 @@ def uuid_photo_path(instance, filename):
 
 class Photo(TimeStampedModel):
     image = ImageField(upload_to=uuid_photo_path, null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, unique=True)
+    default_slug = models.BooleanField(default=False)
     description = models.TextField(null=True, blank=True)
     flickr_id = models.CharField(max_length=255, null=True, blank=True, unique=True)
     attr_author = models.CharField(max_length=255, null=True, blank=True)

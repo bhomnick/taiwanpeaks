@@ -1012,7 +1012,7 @@ body > header h2:after {
     right: calc(100% + 30px);
 }
 
-body > header:not(.header-base) > .container {
+body > header:not(.header-base):not(.header-sm) > .container {
     margin-top: 190px !important;
 }
 
