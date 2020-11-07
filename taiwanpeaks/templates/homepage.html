@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
-{% load static %}
+{% load static photos thumbnail %}
 
 {% block extra_menu_classes %}menu-transparent light{% endblock %}
 
 {% block content %}
-<section id="home" class="section-image section-full-width-right light ken-burn-center" data-parallax="scroll" data-image-src="{% static 'media/img/homepage-banner.jpg' %}">
-  <div class="container">
+{% slug_photo "homepage-header" as header_photo %}
+{% thumbnail header_photo.image "1920x1080" crop="center" as im %}
+<section id="home" class="section-image section-full-width-right light ken-burn-center" data-parallax="scroll" data-image-src="{{ im.url }}">
+{% endthumbnail %}
+  <div class="container" style="background-image:url({% static "media/img/img-taiwan-outline.png" %})">
     <hr class="space-lg" />
     <hr class="space-sm" />
     <div class="row">
@@ -20,7 +23,7 @@
           <div>
             <h3>Top peaks</h3>
             <div class="value">
-              <span class="text-md" data-to="100" data-speed="2000">100</span>
+              <span class="text-md" data-to="100" data-speed="2000"></span>
             </div>
           </div>
         </div>
@@ -29,7 +32,7 @@
           <div>
             <h3>Routes</h3>
             <div class="value">
-              <span class="text-md" data-to="19" data-speed="2000">19</span>
+              <span class="text-md" data-to="38" data-speed="2000"></span>
             </div>
           </div>
         </div>
@@ -38,7 +41,7 @@
           <div>
             <h3>Cabins and shelters</h3>
             <div class="value">
-              <span class="text-md" data-to="43" data-speed="2000">43</span>
+              <span class="text-md" data-to="32" data-speed="2000"></span>
             </div>
           </div>
         </div>
@@ -46,15 +49,18 @@
     </div>
     <hr class="space-lg" />
   </div>
+  <div class="attribution-banner">
+    {% attribution header_photo %}
+  </div>
 </section>
 <section id="routes" class="section-base">
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <ul class="slider controls-right" data-options="type:carousel,nav:true,perView:2,perViewSm:1,gap:30,controls:out">
-          {% include "_components/featured_route.html" with name="Yushan (Jade) main peak" days="1-2" num_peaks="3" difficulty="Easy" description="A classic 3-day trek summiting East Asia's tallest peak, one of the most accessible high mountains in Taiwan" location="Yushan National Park" img_path="media/img/route-jade.png" %}
-          {% include "_components/featured_route.html" with name="Snow mountain" days="2" num_peaks="2" difficulty="Easy" description="Taiwan's second highest peak featuring ancient forests and fantastic views of Shei-pa National Park" location="Shei-pa National Park" img_path="media/img/route-snow.png" %}
-          {% include "_components/featured_route.html" with name="Qilai South and Nanhua" days="2" num_peaks="2" difficulty="Easy" description="Follow the historic Nenggao cross-island trail through forests and alpine meadows, summiting two of Taiwan's top peaks " location="Taroko National Park" img_path="media/img/route-qilainanhua.png" %}
+        <ul class="featured-routes slider controls-right" data-options="type:carousel,nav:true,perView:2,perViewSm:1,gap:30,controls:out">
+          {% for featured_route in featured_routes %}
+          {% include "_components/featured_route.html" with route=featured_route.route %}          
+          {% endfor %}
         </ul>
       </div>
       <div class="col-lg-4">
@@ -69,7 +75,7 @@
           popular hikes including maps, permit information, campground and cabin
           details, as well as recommended itineraries.
         </p>
-        <a href="#" class="btn btn-circle btn-xs">See all routes</a>
+        <a href="{% url 'routes-list' %}" class="btn btn-circle btn-xs">See all routes</a>
       </div>
     </div>
   </div>

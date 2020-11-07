@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import Location
+from .models import Location, FeaturedRoute
+
+
+@admin.register(FeaturedRoute)
+class FeaturedRouteAdmin(admin.ModelAdmin):
+    list_display = ['route', 'order']
+    list_editable = ['order']
 
 
 @admin.register(Location)

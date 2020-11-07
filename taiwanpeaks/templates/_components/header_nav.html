@@ -2,7 +2,10 @@
 
 <nav class="menu-classic align-right {% block extra_menu_classes %}{% endblock %}">
   <div class="container">
-    <div class="menu-brand">
+    <div class="menu-brand" style="background-image:url('{% static 'media/img/img-taiwan-outline-sm.png' %}')">
+      <ul>
+        <li><a href="/">Peaks of Taiwan</a></li>
+      </ul>
     </div>
     <i class="menu-btn"></i>
     <div class="menu-cnt">
@@ -10,8 +13,11 @@
         <li>
           <a href="/">Home</a>
         </li>
-        <li>
+        <li class="dropdown">
           <a href="/#routes">Routes</a>
+          <ul class="fade-in">
+            <li><a href="{% url 'routes-list' %}">See All</a></li>
+          </ul>
         </li>
         <li>
           <a href="/#peaks">Peaks</a>

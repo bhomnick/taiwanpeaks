@@ -17,7 +17,7 @@ class PhotoAdminForm(forms.ModelForm):
 
 @admin.register(Photo)
 class PhotoAdmin(DjangoObjectActions, AdminImageMixin, admin.ModelAdmin):
-    list_display = ['id', 'attr_title', 'description', 'tag_list', 'modified', 'get_preview']
+    list_display = ['id', 'attr_title', 'slug', 'description', 'tag_list', 'modified', 'get_preview']
     list_filter = ['tags__name']
     search_fields = ['attr_title', 'tags__name']
     change_actions = ['update_from_flickr']

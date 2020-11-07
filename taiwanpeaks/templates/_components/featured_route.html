@@ -1,20 +1,24 @@
-{% load static %}
+{% load thumbnail %}
 
 <li>
-  <div class="cnt-box cnt-box-info" data-href="#">
-    <a href="#" class="img-box"><img src="{% static img_path %}" alt="" /></a>
+  <div class="cnt-box cnt-box-info">
+    <a href="{% url 'routes-detail' slug=route.slug %}" class="img-box">
+      {% thumbnail route.header_background_photo.image "800x500" crop="center" as im_small %} 
+      <img src="{{ im_small.url }}" alt="{{ route.name }}" />
+      {% endthumbnail %}
+    </a>
     <div class="caption">
-      <h2>{{ name }}</h2>
+      <h2>{{ route.name }}</h2>
       <div class="cnt-info">
-        <div><span>Days</span><span>{{ days }}</span></div>
-        <div><span>Peaks</span><span>{{ num_peaks }}</span></div>
-        <div><span>Difficulty</span><span>{{ difficulty }}</span></div>
+        <div><span>Days</span><span>{{ route.days_required }}</span></div>
+        <div><span>Peaks</span><span>{{ route.peak_count }}</span></div>
+        <div><span>Difficulty</span><span>{{ route.get_difficulty_display }}</span></div>
       </div>
       <p>
-        {{ description }}
+        {{ route.list_description }}
       </p>
       <div class="bottom-info">
-        {{ location }}
+        <a href="{% url 'routes-detail' slug=route.slug %}">Full details &raquo;</a>
       </div>
     </div>
   </div>
