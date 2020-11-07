@@ -7,7 +7,7 @@ function initListView(sortBy) {
     itemSelector: '.list-item',
     getSortData: {
       name: '.sort-name',
-      rank: '.sort-rank',
+      rank: '[data-sort-rank] parseInt',
       level: '[data-sort-level]',
       duration: '.sort-duration'
     },

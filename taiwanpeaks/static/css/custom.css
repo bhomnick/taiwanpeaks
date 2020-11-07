@@ -126,6 +126,10 @@ body > nav:before {
     background-position: 0 60px;
 }
 
+.featured-routes .caption p {
+    height: 150px;
+}
+
 /*
 # List View
 ===================================================================

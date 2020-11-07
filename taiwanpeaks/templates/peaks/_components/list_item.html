@@ -4,6 +4,7 @@
   class="list-item cnt-box cnt-box-blog-side boxed {{ peak.filter_tags|join:' ' }}" 
   data-href="{% url 'peaks-detail' slug=peak.slug %}"
   data-sort-level="{{ peak.difficulty_index }}"
+  data-sort-rank="{{ peak.rank}}"
 >
   <a href="{% url 'peaks-detail' slug=peak.slug %}" class="img-box">
     {% thumbnail peak.list_photo.image "800x500" crop="center" as im_small %}
@@ -21,7 +22,7 @@
       </p>
       <ul class="icon-list icon-list-horizontal">
         <li><i class="fas fa-mountain text-xs"></i>{{ peak.height }} m</li>
-        <li class="sort-rank"><i class="fas fa-sort-amount-up text-xs"></i>#{{ peak.rank }}</li>
+        <li><i class="fas fa-sort-amount-up text-xs"></i>#{{ peak.rank }}</li>
         <li><i class="fas fa-map-marker text-xs"></i>{{ peak.latitude }}°N {{ peak.longitude }}°E</li>
       </ul>
     </div>
