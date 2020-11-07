@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% load static photos thumbnail %}
+
+{% block header %}
+{% photo_by_tag "peaks-list-header" as header_photo %}
+{% thumbnail header_photo.image "1920x1080" crop="center" as im %}
+<header class="header-image header-sm ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
+  <div class="container">
+    <h1>Top 100 Peaks</h1>
+  </div>
+  <div class="attribution-banner">
+    {% attribution header_photo %}
+  </div>
+</header>
+{% endthumbnail %}
+{% endblock %}
+
+{% block content %}
+<section class="section-base section-color">
+	<div class="container">
+		<div class="row">
+      <div class="col-lg-2 list-filters">
+        <form class="form form-box">		    
+          <div class="list-checkbox-group" data-group="level">
+            <h4>Level</h4>
+            <div class="form-checkbox">
+              <input type="checkbox" id="level-beginner" value=".filter-level-beginner">
+              <label for="level-beginner">Beginner</label>
+            </div>
+            <div class="form-checkbox">
+              <input type="checkbox" id="level-intermediate" value=".filter-level-intermediate">
+              <label for="level-intermediate">Intermediate</label>
+            </div>
+            <div class="form-checkbox">
+              <input type="checkbox" id="level-advanced" value=".filter-level-advanced">
+              <label for="level-advanced">Advanced</label>
+            </div>
+            <div class="form-checkbox">
+              <input type="checkbox" id="level-expert" value=".filter-level-expert">
+              <label for="level-expert">Expert</label>
+            </div>
+          </div>
+          <a class="text-xs clear-filters" href="#">clear filters</a>
+        </form>
+      </div>
+      <div class="col-lg-10">
+        <div class="row">
+          <div class="list-sorting">
+            <span class="text-sm text-bold">Showing <span class="list-count">{{ peaks|length }}</span> of {{ peaks|length }} peaks&nbsp;&nbsp;<a class="clear-filters" href="#">show all</a></span>
+            <div class="menu-inner">
+              <ul class="sort-links">
+                <li class="list-sorting-label">Sort by:</li>
+                <li><a class="active sort-link" data-sort-by="rank" href="#">Rank</a></li>
+                <li><a class="sort-link" data-sort-by="name" href="#">Name</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row list-container">
+          {% for peak in peaks %}
+            {% include "peaks/_components/list_item.html" %}
+          {% endfor %}
+          <div class="cnt-call no-results">No results found. Try <a href="#" class="clear-filters">clearing filters</a>.</div>
+        </div>
+      </div>
+    </div>
+	</div>
+</section>
+<section class="section-base section-color">
+<div class="container">
+  <div class="cnt-box cnt-call">
+      <i class="im-paper-plane"></i>
+      <div class="caption">
+          <h2>Aren't there 100 peaks?</h2>
+          <p>We're continually adding new data. If you'd like to contribute please <a href="mailto:info@peaks.tw">get in touch</a>.</p>
+          <a href="mailto:info@peaks.tw" class="btn btn-xs">Get in Touch</a>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static "scripts/list-view.js" %}"></script>
+<script>
+$(function() {
+  initListView('rank');
+});
+</script>
+{% endblock %}

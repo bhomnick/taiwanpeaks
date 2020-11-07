@@ -5,7 +5,7 @@
 {% block extra_menu_classes %}menu-transparent light{% endblock %}
 
 {% block content %}
-{% slug_photo "homepage-header" as header_photo %}
+{% photo_by_tag "homepage-header" as header_photo %}
 {% thumbnail header_photo.image "1920x1080" crop="center" as im %}
 <section id="home" class="section-image section-full-width-right light ken-burn-center" data-parallax="scroll" data-image-src="{{ im.url }}">
 {% endthumbnail %}

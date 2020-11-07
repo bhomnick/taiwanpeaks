@@ -1,7 +1,7 @@
 {% load thumbnail %}
 
 <div 
-  class="route-list-item cnt-box cnt-box-blog-side boxed {{ route.filter_tags|join:' ' }}" 
+  class="list-item cnt-box cnt-box-blog-side boxed {{ route.filter_tags|join:' ' }}" 
   data-href="{% url 'routes-detail' slug=route.slug %}"
   data-sort-level="{{ route.difficulty_index }}"
 >

@@ -3,7 +3,7 @@
 {% load static photos thumbnail %}
 
 {% block header %}
-{% slug_photo "header-1" as header_photo %}
+{% photo_by_tag "routes-list-header" as header_photo %}
 {% thumbnail header_photo.image "1920x1080" crop="center" as im %}
 <header class="header-image header-sm ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
   <div class="container">
@@ -20,9 +20,9 @@
 <section class="section-base section-color">
 	<div class="container">
 		<div class="row">
-      <div class="col-lg-2 route-list-filters">
+      <div class="col-lg-2 list-filters">
         <form class="form form-box">		    
-          <div class="route-list-checkbox-group" data-group="level">
+          <div class="list-checkbox-group" data-group="level">
             <h4>Level</h4>
             <div class="form-checkbox">
               <input type="checkbox" id="level-beginner" value=".filter-level-beginner">
@@ -42,7 +42,7 @@
             </div>
           </div>
           
-          <div class="route-list-checkbox-group" data-group="duration">
+          <div class="list-checkbox-group" data-group="duration">
             <h4>Duration</h4>
             <div class="form-checkbox">
               <input type="checkbox" id="duration-1" value=".filter-duration-1">
@@ -62,7 +62,7 @@
             </div>
           </div>
        
-          <div class="route-list-checkbox-group" data-group="transport">
+          <div class="list-checkbox-group" data-group="transport">
             <h4>Public Transport</h4>
             <div class="form-checkbox">
               <input type="checkbox" id="public-transport-required" value=".filter-publictransport-yes">
@@ -70,7 +70,7 @@
             </div>
           </div>
           
-          <div class="route-list-checkbox-group" data-group="cabins">
+          <div class="list-checkbox-group" data-group="cabins">
             <h4>Cabins</h4>
             <div class="form-checkbox">
               <input type="checkbox" id="cabins-camping" value=".filter-cabins-none">
@@ -91,11 +91,11 @@
       </div>
       <div class="col-lg-10">
         <div class="row">
-          <div class="route-list-sorting">
-            <span class="text-sm text-bold">Showing <span class="route-list-count">{{ routes|length }}</span> of {{ routes|length }} routes&nbsp;&nbsp;<a class="clear-filters" href="#">show all</a></span>
+          <div class="list-sorting">
+            <span class="text-sm text-bold">Showing <span class="list-count">{{ routes|length }}</span> of {{ routes|length }} routes&nbsp;&nbsp;<a class="clear-filters" href="#">show all</a></span>
             <div class="menu-inner">
               <ul class="sort-links">
-                <li class="route-list-sorting-label">Sort by:</li>
+                <li class="list-sorting-label">Sort by:</li>
                 <li><a class="active sort-link" data-sort-by="name" href="#">Name</a></li>
                 <li><a class="sort-link" data-sort-by="duration" href="#">Duration</a></li>
                 <li><a class="sort-link" data-sort-by="level" href="#">Level</a></li>
@@ -103,7 +103,7 @@
             </div>
           </div>
         </div>
-        <div class="row route-list-container">
+        <div class="row list-container">
           {% for route in routes %}
             {% include "routes/_components/list_item.html" %}
           {% endfor %}
@@ -127,146 +127,10 @@
 {% endblock %}
 
 {% block extra_scripts %}
+<script src="{% static "scripts/list-view.js" %}"></script>
 <script>
-var $container;
-var filters = {};
-
-$(function(){
-  $container = $('.route-list-container');
-  $container.isotope({
-    itemSelector: '.route-list-item',
-    getSortData: {
-      name: '.sort-name',
-      level: '[data-sort-level]',
-      duration: '.sort-duration'
-    },
-    sortBy: 'name'
-  });
-
-  $container.on('arrangeComplete', function(e, filteredItems) {
-    $('.route-list-count').text(filteredItems.length);
-    if (filteredItems.length == 0) {
-      $('.no-results').fadeIn(200);
-    } else {
-      $('.no-results').hide();
-    }
-  });
-
-  $('.clear-filters').on('click', function(e) {
-    e.preventDefault();
-    clearFilters();
-  })
-
-  $('.sort-link').on('click', function(e) {
-    $link = $(e.target);
-    var isActive = $link.hasClass('active');
-    var isDesc = isActive && $link.hasClass('desc');
-    var newClass; 
-    
-    if (!isActive || isDesc) {
-      newClass = 'active';
-    } else {
-      newClass = 'active desc';
-    }
-    
-    $('.sort-links').find('a').removeClass('active desc');
-    $link.addClass(newClass);
-    
-    $container.isotope({
-      sortBy: $link.data('sort-by'),
-      sortAscending: !isActive || isDesc
-    });
-  });
-
-  $('.route-list-filters').on('change', function(e) {
-    var $checkbox = $(e.target);
-    manageCheckbox($checkbox);
-    var comboFilter = getComboFilter(filters);
-    $('.no-results').hide();
-    $container.isotope({filter: comboFilter});
-  });
+$(function() {
+  initListView('name');
 });
-
-function clearFilters() {
-  $('.route-list-filters').find('input[type=checkbox]').prop('checked', false);
-  filters = {};
-  $('.route-list-filters').trigger('change');
-}
-
-function getComboFilter(filters) {
-  var i = 0;
-  var comboFilters = [];
-
-  for (var prop in filters) {
-    var filterGroup = filters[prop];
-    // skip to next filter group if it doesn't have any values
-    if (!filterGroup.length) {
-      continue;
-    }
-    if (i === 0) {
-      // copy to new array
-      comboFilters = filterGroup.slice(0);
-    } else {
-      var filterSelectors = [];
-      // copy to fresh array
-      var groupCombo = comboFilters.slice(0); // [ A, B ]
-      // merge filter Groups
-      for (var k = 0, len3 = filterGroup.length; k < len3; k++) {
-        for (var j = 0, len2 = groupCombo.length; j < len2; j++) {
-          filterSelectors.push(groupCombo[j] + filterGroup[k]); // [ 1, 2 ]
-        }
-
-      }
-      // apply filter selectors to combo filters for next group
-      comboFilters = filterSelectors;
-    }
-    i++;
-  }
-
-  var comboFilter = comboFilters.join(', ');
-  return comboFilter;
-}
-
-function manageCheckbox($checkbox) {
-  var checkbox = $checkbox[0];
-
-  var group = $checkbox.parents('.route-list-checkbox-group').attr('data-group');
-  // create array for filter group, if not there yet
-  var filterGroup = filters[group];
-  if (!filterGroup) {
-    filterGroup = filters[group] = [];
-  }
-
-  var isAll = $checkbox.hasClass('all');
-  // reset filter group if the all box was checked
-  if (isAll) {
-    delete filters[group];
-    if (!checkbox.checked) {
-      checkbox.checked = 'checked';
-    }
-  }
-  
-  // index of
-  var index = $.inArray(checkbox.value, filterGroup);
-
-  if (checkbox.checked) {
-    var selector = isAll ? 'input' : 'input.all';
-    $checkbox.siblings(selector).removeAttr('checked');
-
-
-    if (!isAll && index === -1) {
-      // add filter to group
-      filters[group].push(checkbox.value);
-    }
-
-  } else if (!isAll) {
-    // remove filter from group
-    filters[group].splice(index, 1);
-    // if unchecked the last box, check the all
-    if (!$checkbox.siblings('[checked]').length) {
-      $checkbox.siblings('input.all').attr('checked', 'checked');
-    }
-  }
-}
 </script>
 {% endblock %}

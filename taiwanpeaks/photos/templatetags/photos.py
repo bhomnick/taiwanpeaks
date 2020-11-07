@@ -7,10 +7,10 @@ register = template.Library()
 
 
 @register.simple_tag
-def slug_photo(slug):
-    photo = Photo.objects.filter(slug=slug).first()
+def photo_by_tag(tag):
+    photo = Photo.objects.filter(tags__name=tag).first()
     if not photo:
-        return Photo.objects.get(default_slug=True)
+        return Photo.objects.filter(tags__name='default-by-tag').first()
     return photo
 
 

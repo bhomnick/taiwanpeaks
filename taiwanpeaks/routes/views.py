@@ -18,7 +18,3 @@ def routes_detail(request, slug):
         'route': route,
         'map_api_key': settings.THUNDERFOREST_API_KEY
     })
-
-
-def routes_detail_example(request):
-    return render(request, 'routes/detail_example.html')

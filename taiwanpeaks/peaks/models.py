@@ -17,6 +17,19 @@ class Peak(models.Model):
     locations = models.ManyToManyField('common.Location')
     national_park = models.CharField(max_length=50, choices=constants.NP_CHOICES, null=True, blank=True)
 
+    class Meta:
+        ordering = ['rank']
+
     def __str__(self):
         return self.name
 
+    @property
+    def difficulty_index(self):
+        return constants.DIFFICULTY_CHOICES.index_of(self.difficulty)
+
+    @property
+    def filter_tags(self):
+        # Level
+        tags = [f'filter-level-{self.difficulty}']
+
+        return tags

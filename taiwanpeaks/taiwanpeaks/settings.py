@@ -67,6 +67,7 @@ else:
         'default': env.db()
     }
 
+
 # Thunderforest
 
 THUNDERFOREST_API_KEY = env('THUNDERFOREST_API_KEY', default='')

@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% load static thumbnail photos %}
+
+{% block extra_head %}
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css"
+/>
+<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+{% endblock %}
+
+{% block header %}
+{% thumbnail route.header_background_photo.image "1920x1080" crop="top" as im %}
+<header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
+  <div class="container">
+	  <h1>{{ route.name }}</h1>
+	  <h2>{{ route.name_zh }}</h2>
+  </div>
+  <div class="attribution-banner">
+    {% attribution route.header_background_photo %}
+  </div>
+</header>
+{% endthumbnail %}
+{% endblock %}
+
+{% block content %}
+<section class="section-base">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2>At a glance</h2>
+        <p>
+          {{ route.intro }}
+        </p>      
+      </div>
+      <div class="col-lg-5" style="line-height:100%;">
+        <ul class="text-list text-list-line route-detail-list">
+          <li><b>Difficulty</b><hr /><p>{{ route.get_difficulty_display }}</p></li>
+          <li><b>Total distance</b><hr /><p>{{ route.total_distance }} km</p></li>
+          <li><b>Days required</b><hr /><p>{{ route.days_required }}</p></li>
+          <li><b>Top 100 peaks</b><hr /><p>{{ route.peak_count }}</p></li>
+          <li><b>Locations</b><hr /><p>{{ route.location_list_short|join:' // ' }}</p></li>
+          <li><b>Public transport</b><hr /><p>{% if route.public_transport_accessible %}Yes{% else %}No{% endif %}</p></li>
+          <li><b>Permits</b><hr /><p>
+            {% if route.np_permit_required %}
+            National Park
+            {% if route.police_permit_required %}
+            and 
+            {% endif %}
+            {% endif %}
+            {% if route.police_permit_required %}
+            Police
+            {% endif %}
+          </p></li>
+          <li><b>Cabins</b><hr /><p>{{ route.get_cabin_status_display }}</p></li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="row">
+      <ul class="slider route-carousel" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
+        {% for photo in route.carousel_photos.all %}
+        {% include "routes/_components/carousel_item.html" with photo=photo.photo %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% thumbnail route.summary_background_photo.image "1920x1080" crop="top" as im %}
+<section class="section-image light" data-parallax="scroll" data-bleed="100" data-image-src="{{ im.url }}">
+{% endthumbnail %}
+  <div class="container">
+    <div class="row route-detail-banner">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Days</h3>
+          <p class="text-50 text-black no-margin">{{ route.days_required }}</p> 
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Distance</h3>
+          <p class="text-50 text-black no-margin">{{ route.total_distance}} KM</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Peaks</h3>
+          <p class="text-50 text-black no-margin">{{ route.peak_count }}</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div>
+          <h3>Difficulty</h3>
+          <p class="text-md text-black no-margin difficulty">{{ route.get_difficulty_display }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="attribution-banner">
+    {% attribution route.summary_background_photo %}
+  </div>
+</section>
+<section class="section-base">
+  <div class="container route-detail-itinerary">
+    <div class="title align-center align-left-md">
+      <h2>Recommended Itinerary</h2>
+    </div>
+    {% for day in route.itineraries.all %}
+    {% include "routes/_components/itinerary_day.html" with day=day %}
+    {% endfor %}
+  </div>
+</section>
+{% if route.gpx %}
+<section class="section-base section-color route-detail-map section-google-map">
+  <div id="leaflet">  
+    <a class="leaflet-right leaflet-top btn-gpx-download btn btn-sm btn-border full-width-sm" href="{{ route.gpx.url }}">
+      <i class="fas fa-file-download"></i>&nbsp;
+      Download GPX
+    </a>
+  </div>
+</section>
+{% endif %}
+
+{% if route.route_peaks.count %}
+<section class="section-base section-color">
+  <div class="container">
+    <div class="title align-center align-left-md">
+      <h2>Top 100 Peaks</h2>
+      <p>Covered by this route</p>
+    </div>
+    <div class="route-detail-peaks">
+      {% for route_peak in route.route_peaks.all %}
+      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if route.cabins.count %}
+<section class="section-base">
+  <div class="container">
+    <div class="title align-center align-left-md">
+      <h2>Cabins and Campgrounds</h2>
+    </div>
+    <div class="tab-box" data-tab-anima="fade-in">
+      <ul class="tab-nav align-center">
+        {% for cabin in route.cabins.all %}
+        <li {% if forloop.first %}class="active"{% endif %}>
+          <a href="#">{{ cabin.cabin.name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% for cabin in route.cabins.all %}
+      {% include "routes/_components/cabin.html" with cabin=cabin.cabin active=forloop.first %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+<section class="section-base section-color">
+  <div class="container route-detail-practical">
+    <div class="title align-center align-left-md">
+      <h2>Permits and Transportation</h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-10 cnt-box cnt-call">
+        <div class="icon-box icon-box-left">
+          <i class="fas fa-tasks"></i>
+          {% if route.custom_permit_info %}
+          <div class="caption">
+            <h3>Permits</h3>
+            {{ route.custom_permit_info|safe }}
+          </div>
+          {% elif route.np_permit_required == 'taroko' %}
+          {% include "routes/_components/permits_taroko.html" with police_permit_required=route.police_permit_required %}
+          {% elif route.np_permit_required == 'sheipa' %}
+          {% include "routes/_components/permits_sheipa.html" %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if route.transportation_desc %}
+    <div class="row justify-content-center">
+      <div class="col-lg-10 cnt-box cnt-call">
+        <div class="icon-box icon-box-left">
+          <i class="fas fa-bus"></i>
+          <div class="caption">
+            <h3>Transportation</h3>
+            <p>{{ route.transportation_desc }}</p>
+          </div>
+          {% if route.transportation_link %}
+          <div class="actions">
+            <a href="{{ route.transportation_link }}" target="_blank" class="btn btn-xs">More Info</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    $('.route-carousel li').magnificPopup({
+      delegate: '.img-box',
+      type: 'image',
+      tLoading: 'Loading image #%curr%...',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+        preload: [0,1]
+      }
+    });
+  });   
+</script>
+{% if route.gpx %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.4.0/gpx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
+<script>
+var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+var ocmLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+var apiKey = '{{ map_api_key }}';
+var tileUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
+
+if (apiKey) {
+  tileUrl += '?apikey=' + apiKey;
+}
+
+var map = new L.Map('leaflet', {
+  layers: [
+    new L.tileLayer(
+      tileUrl, {
+        attribution: '&copy; '+ mapLink + ' Contributors & ' + ocmLink,
+        maxZoom: 18,
+      }
+    )
+  ],
+  center: [0, 0],
+  zoom: 0,
+  scrollWheelZoom: false
+});
+
+var gpx = '{{ route.gpx.url }}'; // URL to your GPX file or the GPX itself
+new L.GPX(gpx, {
+  async: true,
+  parseElements: ["track", "waypoint"],
+  marker_options: {
+    startIconUrl: null,
+    endIconUrl: null,
+    startIcon: null,
+    endIcon: null,
+    wptIcons: {
+      '': new L.AwesomeMarkers.icon({
+        icon: 'info-circle',
+        prefix: 'fa',
+        markerColor: 'purple',
+        iconColor: null
+      }),
+      'Water Source': new L.AwesomeMarkers.icon({
+        icon: 'tint',
+        prefix: 'fa',
+        markerColor: 'darkblue',
+        iconColor: null
+      }),
+      'Summit': new L.AwesomeMarkers.icon({
+        icon: 'mountain',
+        prefix: 'fa',
+        markerColor: 'darkred',
+        iconColor: null
+      }),
+      'Lodge': new L.AwesomeMarkers.icon({
+        icon: 'home',
+        prefix: 'fa',
+        markerColor: 'cadetblue',
+        iconColor: null
+      }),
+      'Trail Head': new L.AwesomeMarkers.icon({
+        icon: 'hiking',
+        prefix: 'fa',
+        markerColor: 'green',
+        iconColor: null
+      })
+    }
+  } 
+}).on('loaded', function(e) {
+  map.fitBounds(e.target.getBounds(), {padding: [30, 20]});
+}).on('addpoint', function(e) {
+  var popup = e.point.getPopup();
+  if (!popup) {
+    return;
+  }  
+  
+  var descEl = e.element.getElementsByTagName('desc');
+  var desc = '';
+  if (descEl.length > 0) {
+    desc = descEl[0].textContent;
+  }
+  desc = desc.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    
+  popup.setContent('<h3>'+e.point.options.title+'</h3><br/>'+desc);
+}).addTo(map);
+
+</script>
+{% endif %}
+{% endblock %}

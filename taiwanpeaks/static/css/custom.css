@@ -127,38 +127,38 @@ body > nav:before {
 }
 
 /*
-# Route list
+# List View
 ===================================================================
 */
 
-.route-list-container .no-results {
+.list-container .no-results {
     margin: 100px auto 0 auto;
     display: none;
 }
 
-.route-list-filters select {
+.list-filters select {
 	width: 100%;
 }
 
-.route-list-filters label {
+.list-filters label {
 	font-weight: bold;
 	display: block;
 	width: 100%;
 }
 
-.route-list-item {
+.list-item {
     margin-bottom: 20px;
 }
 
-.route-list-item h2 {
+.list-item h2 {
     display: inline-block;
 }
 
-.route-list-item .caption {
+.list-item .caption {
     padding-bottom: 25px !important;
 }
 
-.route-list-item .extra-field {
+.list-item .extra-field {
     color: rgb(255, 255, 255);
 	background-color: #379cf4;
 	font-weight: 600;
@@ -171,38 +171,38 @@ body > nav:before {
 	margin-top: -8px;
 }
 
-.route-list-item ul {
+.list-item ul {
     margin: 8px 0 0 0 !important;
 }
 
-.route-list-checkbox-group {
+.list-checkbox-group {
     margin-bottom: 15px;
 }
 
-.route-list-checkbox-group .form-checkbox {
+.list-checkbox-group .form-checkbox {
     margin: 0 0 5px 0;
 }
 
-.route-list-checkbox-group h4 {
+.list-checkbox-group h4 {
     margin-bottom: 5px;
 }
 
-.route-list-sorting {
+.list-sorting {
     display: table;
     width: 100%;
     margin-top: -18px;
 }
 
-.route-list-sorting > * {
+.list-sorting > * {
     display: table-cell;
     vertical-align: middle;
 }
 
-.route-list-sorting a.active {
+.list-sorting a.active {
     margin-right: 20px;
 }
 
-.route-list-sorting a.active:after {
+.list-sorting a.active:after {
     font-family: "Icons";
     content: "\68";
     position: absolute;
@@ -213,19 +213,19 @@ body > nav:before {
     text-transform: none;
 }
 
-.route-list-sorting a.active.desc:after {
+.list-sorting a.active.desc:after {
     transform: translateY(-50%) rotate(-90deg);
 }
 
-.route-list-sorting .menu-inner {
+.list-sorting .menu-inner {
     float: right;
 }
 
-.route-list-sorting .menu-inner li:before {
+.list-sorting .menu-inner li:before {
     height: 0 !important;
 }
 
-.route-list-sorting-label {
+.list-sorting-label {
     display: inline-block;
     margin-top: 10px;
 }
