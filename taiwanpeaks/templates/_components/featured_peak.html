@@ -1,13 +1,15 @@
-{% load static %}
+{% load thumbnail %}
 
-<a href="#" class="media-box media-box-reveal" data-anima="scale" data-trigger="hover">
-  <img class="anima" src="{% static img_path %}" alt="">
+<a href="{% url 'peaks-detail' slug=featured_peak.peak.slug %}" class="media-box media-box-reveal" data-anima="scale" data-trigger="hover">
+  {% thumbnail featured_peak.peak.list_photo.image "800x800" crop="center" as im_small %} 
+  <img class="anima" src="{{ im_small.url }}" alt="{{ featured_peak.name }}">
+  {% endthumbnail %}
   <div class="caption">
-    <h2>{{ name }}</h2>
-    <div class="extra-field">#{{ ranking }}</div>
-    <h3>{{ height }} m</h3>
+    <h2>{{ featured_peak.name }}</h2>
+    <div class="extra-field">#{{ featured_peak.peak.rank }}</div>
+    <h3>{{ featured_peak.peak.height }} m</h3>
     <p>
-      Level: <strong>{{ difficulty }}</strong>
+      Level: <strong>{{ featured_peak.peak.get_difficulty_display }}</strong>
     </p>
   </div>
 </a>

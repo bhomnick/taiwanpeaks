@@ -80,26 +80,26 @@
     </div>
   </div>
 </section>
-<section id="peaks" class="section-image alpins-slider light section-full-width-left ken-burn-center" data-parallax="scroll" data-image-src="{% static 'media/img/homepage-peaks-banner.jpg' %}">
+{% photo_by_tag "homepage-peaks-banner" as peaks_banner %}
+{% thumbnail peaks_banner.image "1920x1080" crop="center" as im %}
+<section id="peaks" class="section-image alpins-slider light section-full-width-left ken-burn-center" data-parallax="scroll" data-image-src="{{ im.url }}">
+{% endthumbnail %}
   <div class="container">
     <div class="row">
       <div class="col-lg-6">
         <ul class="slider" data-options="type:slider,nav:true,arrows:true,perView:3,perViewLg:2,perViewSm:1,gap:30,controls:out,autoheight:false">
+          {% for featured_peak in featured_peaks %}
+          {% if forloop.counter0|divisibleby:2 %}
           <li>
-            {% include "_components/featured_peak.html" with name="Jade" ranking="1" height="3952" difficulty="BEGINNER" img_path="media/img/peak-jade.png" %}
+          {% endif %}
+          {% include "_components/featured_peak.html" %}
+          {% if forloop.counter0|divisibleby:2 %}
             <hr class="space-xs">
-            {% include "_components/featured_peak.html" with name="Beidawu" ranking="92" height="3090" difficulty="BEGINNER" img_path="media/img/peak-beidawu.png" %}
+          {% endif %}
+          {% if not forloop.counter0|divisibleby:2 or forloop.last %}
           </li>
-          <li>
-            {% include "_components/featured_peak.html" with name="Nanhua" ranking="75" height="3183" difficulty="BEGINNER" img_path="media/img/peak-nanhua.png" %}
-            <hr class="space-xs">
-            {% include "_components/featured_peak.html" with name="Nenggao" ranking="58" height="3261" difficulty="INTERMEDIATE" img_path="media/img/peak-nenggao.png" %}
-          </li>
-          <li>
-            {% include "_components/featured_peak.html" with name="Hehuan" ranking="36" height="3416" difficulty="BEGINNER" img_path="media/img/peak-hehuan.png" %}
-            <hr class="space-xs">
-            {% include "_components/featured_peak.html" with name="Dabajian" ranking="27" height="3505" difficulty="BEGINNER" img_path="media/img/peak-dabajian.png" %}
-          </li>
+          {% endif %}
+          {% endfor %}
         </ul>
       </div>
       <div class="col-lg-6" data-anima="fade-left" data-time="2000">
@@ -108,7 +108,7 @@
           Completing the 100 peaks of Taiwan is the ultimate hiking challenge.
           Browse peaks organized by difficulty, route, cabin access, and more.
         </p>
-        <a href="treks.html" class="btn btn-sm btn-circle">See all peaks</a>
+        <a href="{% url 'peaks-list' %}" class="btn btn-sm btn-circle">See all peaks</a>
         <hr class="space hidden-md" />
       </div>
     </div>

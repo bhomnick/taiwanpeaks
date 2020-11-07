@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import Location, FeaturedRoute
+from .models import Location, FeaturedPeak, FeaturedRoute
+
+
+@admin.register(FeaturedPeak)
+class FeaturedPeakAdmin(admin.ModelAdmin):
+    list_display = ['peak', 'order', 'name_override']
+    list_editable = ['order', 'name_override']
 
 
 @admin.register(FeaturedRoute)
