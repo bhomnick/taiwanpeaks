@@ -12,14 +12,14 @@
 {% endblock %}
 
 {% block header %}
-{% thumbnail route.header_background_photo.image "1920x1080" crop="top" as im %}
+{% thumbnail peak.list_photo.image "1920x1080" crop="top" as im %}
 <header class="header-image ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
   <div class="container">
-	  <h1>{{ route.name }}</h1>
-	  <h2>{{ route.name_zh }}</h2>
+	  <h1>{{ peak.name }}</h1>
+	  <h2>{{ peak.name_zh }}</h2>
   </div>
   <div class="attribution-banner">
-    {% attribution route.header_background_photo %}
+    {% attribution peak.list_photo %}
   </div>
 </header>
 {% endthumbnail %}
@@ -30,41 +30,21 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <h2>At a glance</h2>
         <p>
           {{ route.intro }}
         </p>      
       </div>
       <div class="col-lg-5" style="line-height:100%;">
+        <h2>At a glance</h2>
         <ul class="text-list text-list-line route-detail-list">
-          <li><b>Difficulty</b><hr /><p>{{ route.get_difficulty_display }}</p></li>
-          <li><b>Total distance</b><hr /><p>{{ route.total_distance }} km</p></li>
-          <li><b>Days required</b><hr /><p>{{ route.days_required }}</p></li>
-          <li><b>Top 100 peaks</b><hr /><p>{{ route.peak_count }}</p></li>
-          <li><b>Locations</b><hr /><p>{{ route.location_list_short|join:' // ' }}</p></li>
-          <li><b>Public transport</b><hr /><p>{% if route.public_transport_accessible %}Yes{% else %}No{% endif %}</p></li>
-          <li><b>Permits</b><hr /><p>
-            {% if route.np_permit_required %}
-            National Park
-            {% if route.police_permit_required %}
-            and 
-            {% endif %}
-            {% endif %}
-            {% if route.police_permit_required %}
-            Police
-            {% endif %}
-          </p></li>
-          <li><b>Cabins</b><hr /><p>{{ route.get_cabin_status_display }}</p></li>
+          <li><b>Difficulty</b><hr /><p>{{ peak.get_difficulty_display }}</p></li>
+          <li><b>Height</b><hr /><p>{{ peak.height }} km</p></li>
+          <li><b>Rank</b><hr /><p>#{{ peak.rank }}</p></li>
+          <li><b>Latitude</b><hr /><p>{{ peak.latitude }}°N</p></li>
+          <li><b>Longitude</b><hr /><p>{{ peak.longitude }}°E</p></li>
+          <li><b>Locations</b><hr /><p>{{ peak.location_list_short|join:' // ' }}</p></li>
         </ul>
       </div>
-    </div>
-  
-    <div class="row">
-      <ul class="slider route-carousel" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
-        {% for photo in route.carousel_photos.all %}
-        {% include "routes/_components/carousel_item.html" with photo=photo.photo %}
-        {% endfor %}
-      </ul>
     </div>
   </div>
 </section>
@@ -73,28 +53,22 @@
 {% endthumbnail %}
   <div class="container">
     <div class="row route-detail-banner">
-      <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="col-lg-4 col-md-6 col-sm-6">
         <div>
-          <h3>Days</h3>
-          <p class="text-50 text-black no-margin">{{ route.days_required }}</p> 
+          <h3>Height</h3>
+          <p class="text-50 text-black no-margin">{{ peak.height }} m</p> 
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="col-lg-4 col-md-6 col-sm-6">
         <div>
-          <h3>Distance</h3>
-          <p class="text-50 text-black no-margin">{{ route.total_distance}} KM</p>
+          <h3>Rank</h3>
+          <p class="text-50 text-black no-margin">#{{ peak.rank }}</p>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div>
-          <h3>Peaks</h3>
-          <p class="text-50 text-black no-margin">{{ route.peak_count }}</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="col-lg-4 col-md-6 col-sm-6">
         <div>
           <h3>Difficulty</h3>
-          <p class="text-md text-black no-margin difficulty">{{ route.get_difficulty_display }}</p>
+          <p class="text-md text-black no-margin difficulty">{{ peak.get_difficulty_display }}</p>
         </div>
       </div>
     </div>
@@ -113,16 +87,10 @@
     {% endfor %}
   </div>
 </section>
-{% if route.gpx %}
 <section class="section-base section-color route-detail-map section-google-map">
   <div id="leaflet">  
-    <a class="leaflet-right leaflet-top btn-gpx-download btn btn-sm btn-border full-width-sm" href="{{ route.gpx.url }}">
-      <i class="fas fa-file-download"></i>&nbsp;
-      Download GPX
-    </a>
   </div>
 </section>
-{% endif %}
 
 {% if route.route_peaks.count %}
 <section class="section-base section-color">
@@ -206,21 +174,6 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-  $(document).ready(function() {
-    $('.route-carousel li').magnificPopup({
-      delegate: '.img-box',
-      type: 'image',
-      tLoading: 'Loading image #%curr%...',
-      gallery: {
-        enabled: true,
-        navigateByImgClick: true,
-        preload: [0,1]
-      }
-    });
-  });   
-</script>
-{% if route.gpx %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.4.0/gpx.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
@@ -229,6 +182,9 @@ var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 var ocmLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
 var apiKey = '{{ map_api_key }}';
 var tileUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
+var peakLongitude = '{{ peak.longitude }}';
+var peakLatitude = '{{ peak.latitude }}'
+
 
 if (apiKey) {
   tileUrl += '?apikey=' + apiKey;
@@ -243,71 +199,18 @@ var map = new L.Map('leaflet', {
       }
     )
   ],
-  center: [0, 0],
-  zoom: 0,
+  center: [peakLatitude, peakLongitude],
+  zoom: 15,
   scrollWheelZoom: false
 });
 
-var gpx = '{{ route.gpx.url }}'; // URL to your GPX file or the GPX itself
-new L.GPX(gpx, {
-  async: true,
-  parseElements: ["track", "waypoint"],
-  marker_options: {
-    startIconUrl: null,
-    endIconUrl: null,
-    startIcon: null,
-    endIcon: null,
-    wptIcons: {
-      '': new L.AwesomeMarkers.icon({
-        icon: 'info-circle',
-        prefix: 'fa',
-        markerColor: 'purple',
-        iconColor: null
-      }),
-      'Water Source': new L.AwesomeMarkers.icon({
-        icon: 'tint',
-        prefix: 'fa',
-        markerColor: 'darkblue',
-        iconColor: null
-      }),
-      'Summit': new L.AwesomeMarkers.icon({
-        icon: 'mountain',
-        prefix: 'fa',
-        markerColor: 'darkred',
-        iconColor: null
-      }),
-      'Lodge': new L.AwesomeMarkers.icon({
-        icon: 'home',
-        prefix: 'fa',
-        markerColor: 'cadetblue',
-        iconColor: null
-      }),
-      'Trail Head': new L.AwesomeMarkers.icon({
-        icon: 'hiking',
-        prefix: 'fa',
-        markerColor: 'green',
-        iconColor: null
-      })
-    }
-  } 
-}).on('loaded', function(e) {
-  map.fitBounds(e.target.getBounds(), {padding: [30, 20]});
-}).on('addpoint', function(e) {
-  var popup = e.point.getPopup();
-  if (!popup) {
-    return;
-  }  
-  
-  var descEl = e.element.getElementsByTagName('desc');
-  var desc = '';
-  if (descEl.length > 0) {
-    desc = descEl[0].textContent;
-  }
-  desc = desc.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-    
-  popup.setContent('<h3>'+e.point.options.title+'</h3><br/>'+desc);
-}).addTo(map);
+var peakMarker = new L.AwesomeMarkers.icon({
+  icon: 'mountain',
+  prefix: 'fa',
+  markerColor: 'darkred',
+  iconColor: null
+});
 
+L.marker([peakLatitude, peakLongitude], {icon: peakMarker}).addTo(map);
 </script>
-{% endif %}
 {% endblock %}

@@ -24,6 +24,10 @@ class Peak(models.Model):
         return self.name
 
     @property
+    def location_list_short(self):
+        return [l.name_short for l in self.locations.all()]
+
+    @property
     def difficulty_index(self):
         return constants.DIFFICULTY_CHOICES.index_of(self.difficulty)
 

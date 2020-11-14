@@ -68,8 +68,8 @@ body > nav:before {
 
 .menu-brand {
     background-repeat: no-repeat;
-    background-size: 27px;
-    background-position: 0 7px;
+    background-size: 35px;
+    background-position: 0 9px;
 }
 
 .menu-brand > ul {
@@ -86,7 +86,7 @@ body > nav:before {
     transition: all 0.5s;
     width: 100%;
     height: 100%;
-    padding-left: 35px;
+    padding-left: 50px;
     display: block;
 }
 
