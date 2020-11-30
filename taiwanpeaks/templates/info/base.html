@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section-base">
+	<div class="container">
+		<div class="row">
+      <div class="col-lg-3">
+        {% include "info/_components/menu.html" %}
+      </div>
+      <div class="col-lg-9">
+        {% block info-content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

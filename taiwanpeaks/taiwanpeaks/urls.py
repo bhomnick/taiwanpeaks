@@ -24,6 +24,7 @@ from common.views import homepage
 urlpatterns = [
     path('', homepage, name='homepage'),
     path('admin/', admin.site.urls),
+    path('info/', include('info.urls')),
     path('peaks/', include('peaks.urls')),
     path('routes/', include('routes.urls'))
 ]

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     # Project
     'common',
+    'info',
     'peaks',
     'photos',
     'routes',
