@@ -235,47 +235,60 @@ body > nav:before {
 }
 
 /*
-# Route Detail
+# Detail view
 ===================================================================
 */
 
-.route-detail-top-container {
+.detail-top-container {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
 }
 
-.route-detail-menu {
+.detail-menu {
     display: inline-block;
     margin: 0 auto;
 }
 
-.route-detail-list-container {
+.detail-list-container {
+    display: table;
+    height: 100%;
+    width: 100%;
 }
 
-.route-detail-itinerary .cnt-box {
+.detail-list-center {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.detail-list-header {
+    margin-bottom: 1em;
+}
+
+.detail-itinerary .cnt-box {
    text-align: left !important;
 }
 
-.route-detail-itinerary .badge p {
+.detail-itinerary .badge p {
     margin-bottom: 12px;
 }
 
-.route-detail-itinerary .badge h2 {
+.detail-itinerary .badge h2 {
     margin-bottom: 20px;
 }
 
-.route-detail-itinerary .grid-box {
+.detail-itinerary .grid-box {
     grid-gap: 5px;
 }
 
-.route-detail-itinerary .route-detail-item {
+.detail-itinerary .route-detail-item {
     display: flex;
     font-size: 14px;
     line-height: 18px;
     margin-bottom: 10px;
 }
 
-.route-detail-itinerary .route-detail-item i {
+.detail-itinerary .route-detail-item i {
     display: inline-block;
     flex: 0 0 15px;
     text-align: center;
@@ -283,27 +296,27 @@ body > nav:before {
     padding-top: 2px;
 }
 
-.route-detail-itinerary .route-detail-item span {
+.detail-itinerary .route-detail-item span {
     display: inline-block;
     white-space: normal;
 }
 
-.route-detail-itinerary-arrow {
+.detail-itinerary-arrow {
     color: #379cf4;
     display: inline-block;
     margin: 0 10px;
 }
 
-.route-detail-map {
+.detail-map {
     min-height: 600px;
 }
 
-.route-detail-map > div {
+.detail-map > div {
     width: 100%;
     height: 600px;
 }
 
-.route-detail-map .btn-gpx-download {
+.detail-map .btn-gpx-download {
     background-color: white;
     margin: 10px 10px 0 0;
     display: block;
@@ -333,24 +346,24 @@ body > nav:before {
     font-size: 14px;
 }
 
-.route-detail-practical .caption {
+.detail-practical .caption {
     max-width: 100%;
 }
 
-.route-detail-practical .cnt-call .caption a.btn {
+.detail-practical .cnt-call .caption a.btn {
     position: relative;
     right: auto;
     top: auto;
     margin-top: 0;
 }
 
-.route-detail-practical .actions {
+.detail-practical .actions {
     text-align: center;
     padding-left: 30px;
     min-width: 180px;
 }
 
-.route-detail-banner .difficulty {
+.detail-banner .difficulty {
     line-height: 70px;
 }
 
@@ -367,13 +380,19 @@ body > nav:before {
     display: inline-block;
 }
 
-.route-detail-peaks {
+.detail-peaks, .detail-routes {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-.route-detail-peaks .route-detail-peak {
+.detail-route {
+    max-width: 450px;
+    min-width: 300px;
+    margin: 20px 10px;
+}
+
+.detail-peak {
     max-width: 330px;
     min-width: 300px;
     margin: 20px 10px;

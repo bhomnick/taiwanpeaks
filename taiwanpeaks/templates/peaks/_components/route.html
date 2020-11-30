@@ -1,0 +1,25 @@
+{% load thumbnail %}
+
+<div class="detail-route">
+  <div class="cnt-box cnt-box-info boxed" data-href="{% url 'routes-detail' slug=route.slug %}">
+    <a href="{% url 'routes-detail' slug=route.slug %}" class="img-box">
+      {% thumbnail route.header_background_photo.image "800x500" crop="center" as im_small %} 
+      <img src="{{ im_small.url }}" alt="{{ route.name }}" />
+      {% endthumbnail %}
+    </a>
+    <div class="caption">
+      <h2>{{ route.name }}</h2>
+      <div class="cnt-info">
+        <div><span>Days</span><span>{{ route.days_required }}</span></div>
+        <div><span>Peaks</span><span>{{ route.peak_count }}</span></div>
+        <div><span>Difficulty</span><span>{{ route.get_difficulty_display }}</span></div>
+      </div>
+      <p>
+        {{ route.list_description }}
+      </p>
+      <div class="bottom-info">
+        <a href="{% url 'routes-detail' slug=route.slug %}">Full guide &raquo;</a>
+      </div>
+    </div>
+  </div>
+</div>

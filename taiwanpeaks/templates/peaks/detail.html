@@ -29,148 +29,53 @@
 <section class="section-base">
   <div class="container">
     <div class="row">
-      <div class="col-lg-7">
-        <p>
-          {{ route.intro }}
-        </p>      
-      </div>
-      <div class="col-lg-5" style="line-height:100%;">
-        <h2>At a glance</h2>
-        <ul class="text-list text-list-line route-detail-list">
-          <li><b>Difficulty</b><hr /><p>{{ peak.get_difficulty_display }}</p></li>
-          <li><b>Height</b><hr /><p>{{ peak.height }} km</p></li>
-          <li><b>Rank</b><hr /><p>#{{ peak.rank }}</p></li>
-          <li><b>Latitude</b><hr /><p>{{ peak.latitude }}°N</p></li>
-          <li><b>Longitude</b><hr /><p>{{ peak.longitude }}°E</p></li>
-          <li><b>Locations</b><hr /><p>{{ peak.location_list_short|join:' // ' }}</p></li>
-        </ul>
-      </div>
+      <div class="col-lg-6">
+      {% thumbnail peak.list_photo.image "1920x1080" as im_full %}
+      {% thumbnail peak.list_photo.image "800x500" crop="center" as im_small %}
+      <a class="img-box lightbox" href="{{ im_full.url }}" data-lightbox-anima="fade-in" title='{% attribution peak.list_photo %}'>
+        <img src="{{ im_small.url }}" alt="">
+      </a>
+      {% endthumbnail %}
+      {% endthumbnail %}
     </div>
-  </div>
-</section>
-{% thumbnail route.summary_background_photo.image "1920x1080" crop="top" as im %}
-<section class="section-image light" data-parallax="scroll" data-bleed="100" data-image-src="{{ im.url }}">
-{% endthumbnail %}
-  <div class="container">
-    <div class="row route-detail-banner">
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div>
-          <h3>Height</h3>
-          <p class="text-50 text-black no-margin">{{ peak.height }} m</p> 
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div>
-          <h3>Rank</h3>
-          <p class="text-50 text-black no-margin">#{{ peak.rank }}</p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div>
-          <h3>Difficulty</h3>
-          <p class="text-md text-black no-margin difficulty">{{ peak.get_difficulty_display }}</p>
+      <div class="col-lg-6" style="line-height:100%;">
+        <div class="detail-list-container">
+          <div class="detail-list-center">
+            <h2 class="detail-list-header">At a glance</h2>
+            <ul class="text-list text-list-line detail-list">
+              <li><b>Difficulty</b><hr /><p>{{ peak.get_difficulty_display }}</p></li>
+              <li><b>Height</b><hr /><p>{{ peak.height }} km</p></li>
+              <li><b>Rank</b><hr /><p>#{{ peak.rank }}</p></li>
+              <li><b>Latitude</b><hr /><p>{{ peak.latitude }}°N</p></li>
+              <li><b>Longitude</b><hr /><p>{{ peak.longitude }}°E</p></li>
+              <li><b>Locations</b><hr /><p>{{ peak.location_list_short|join:' // ' }}</p></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="attribution-banner">
-    {% attribution route.summary_background_photo %}
-  </div>
 </section>
-<section class="section-base">
-  <div class="container route-detail-itinerary">
-    <div class="title align-center align-left-md">
-      <h2>Recommended Itinerary</h2>
-    </div>
-    {% for day in route.itineraries.all %}
-    {% include "routes/_components/itinerary_day.html" with day=day %}
-    {% endfor %}
-  </div>
-</section>
-<section class="section-base section-color route-detail-map section-google-map">
+<section class="section-base section-color detail-map section-google-map">
   <div id="leaflet">  
   </div>
 </section>
-
-{% if route.route_peaks.count %}
+{% if peak.routes.count %}
 <section class="section-base section-color">
   <div class="container">
     <div class="title align-center align-left-md">
-      <h2>Top 100 Peaks</h2>
-      <p>Covered by this route</p>
+      <h2>Routes</h2>
+      <p>Covering this peak</p>
     </div>
-    <div class="route-detail-peaks">
-      {% for route_peak in route.route_peaks.all %}
-      {% include "routes/_components/peak.html" with peak=route_peak.peak %}
+    <div class="detail-routes">
+      {% for route in peak.routes.all %}
+      {% include "peaks/_components/route.html" with route=route.route %}
       {% endfor %}
       </div>
     </div>
   </div>
 </section>
 {% endif %}
-
-{% if route.cabins.count %}
-<section class="section-base">
-  <div class="container">
-    <div class="title align-center align-left-md">
-      <h2>Cabins and Campgrounds</h2>
-    </div>
-    <div class="tab-box" data-tab-anima="fade-in">
-      <ul class="tab-nav align-center">
-        {% for cabin in route.cabins.all %}
-        <li {% if forloop.first %}class="active"{% endif %}>
-          <a href="#">{{ cabin.cabin.name }}</a>
-        </li>
-        {% endfor %}
-      </ul>
-      {% for cabin in route.cabins.all %}
-      {% include "routes/_components/cabin.html" with cabin=cabin.cabin active=forloop.first %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-<section class="section-base section-color">
-  <div class="container route-detail-practical">
-    <div class="title align-center align-left-md">
-      <h2>Permits and Transportation</h2>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-10 cnt-box cnt-call">
-        <div class="icon-box icon-box-left">
-          <i class="fas fa-tasks"></i>
-          {% if route.custom_permit_info %}
-          <div class="caption">
-            <h3>Permits</h3>
-            {{ route.custom_permit_info|safe }}
-          </div>
-          {% elif route.np_permit_required == 'taroko' %}
-          {% include "routes/_components/permits_taroko.html" with police_permit_required=route.police_permit_required %}
-          {% elif route.np_permit_required == 'sheipa' %}
-          {% include "routes/_components/permits_sheipa.html" %}
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    {% if route.transportation_desc %}
-    <div class="row justify-content-center">
-      <div class="col-lg-10 cnt-box cnt-call">
-        <div class="icon-box icon-box-left">
-          <i class="fas fa-bus"></i>
-          <div class="caption">
-            <h3>Transportation</h3>
-            <p>{{ route.transportation_desc }}</p>
-          </div>
-          {% if route.transportation_link %}
-          <div class="actions">
-            <a href="{{ route.transportation_link }}" target="_blank" class="btn btn-xs">More Info</a>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    {% endif %}
-</section>
 {% endblock %}
 
 {% block extra_scripts %}
@@ -184,7 +89,6 @@ var apiKey = '{{ map_api_key }}';
 var tileUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
 var peakLongitude = '{{ peak.longitude }}';
 var peakLatitude = '{{ peak.latitude }}'
-
 
 if (apiKey) {
   tileUrl += '?apikey=' + apiKey;

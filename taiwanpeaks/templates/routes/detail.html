@@ -36,7 +36,7 @@
         </p>      
       </div>
       <div class="col-lg-5" style="line-height:100%;">
-        <ul class="text-list text-list-line route-detail-list">
+        <ul class="text-list text-list-line detail-list">
           <li><b>Difficulty</b><hr /><p>{{ route.get_difficulty_display }}</p></li>
           <li><b>Total distance</b><hr /><p>{{ route.total_distance }} km</p></li>
           <li><b>Days required</b><hr /><p>{{ route.days_required }}</p></li>
@@ -60,7 +60,7 @@
     </div>
   
     <div class="row">
-      <ul class="slider route-carousel" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
+      <ul class="slider carousel" data-options="type:carousel,arrows:true,nav:true,perView:3,perViewMd:2,perViewSm:1,controls:out">
         {% for photo in route.carousel_photos.all %}
         {% include "routes/_components/carousel_item.html" with photo=photo.photo %}
         {% endfor %}
@@ -72,7 +72,7 @@
 <section class="section-image light" data-parallax="scroll" data-bleed="100" data-image-src="{{ im.url }}">
 {% endthumbnail %}
   <div class="container">
-    <div class="row route-detail-banner">
+    <div class="row detail-banner">
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div>
           <h3>Days</h3>
@@ -104,7 +104,7 @@
   </div>
 </section>
 <section class="section-base">
-  <div class="container route-detail-itinerary">
+  <div class="container detail-itinerary">
     <div class="title align-center align-left-md">
       <h2>Recommended Itinerary</h2>
     </div>
@@ -114,7 +114,7 @@
   </div>
 </section>
 {% if route.gpx %}
-<section class="section-base section-color route-detail-map section-google-map">
+<section class="section-base section-color detail-map section-google-map">
   <div id="leaflet">  
     <a class="leaflet-right leaflet-top btn-gpx-download btn btn-sm btn-border full-width-sm" href="{{ route.gpx.url }}">
       <i class="fas fa-file-download"></i>&nbsp;
@@ -131,7 +131,7 @@
       <h2>Top 100 Peaks</h2>
       <p>Covered by this route</p>
     </div>
-    <div class="route-detail-peaks">
+    <div class="detail-peaks">
       {% for route_peak in route.route_peaks.all %}
       {% include "routes/_components/peak.html" with peak=route_peak.peak %}
       {% endfor %}
@@ -163,7 +163,7 @@
 </section>
 {% endif %}
 <section class="section-base section-color">
-  <div class="container route-detail-practical">
+  <div class="container detail-practical">
     <div class="title align-center align-left-md">
       <h2>Permits and Transportation</h2>
     </div>
@@ -208,7 +208,7 @@
 {% block extra_scripts %}
 <script>
   $(document).ready(function() {
-    $('.route-carousel li').magnificPopup({
+    $('.carousel li').magnificPopup({
       delegate: '.img-box',
       type: 'image',
       tLoading: 'Loading image #%curr%...',
