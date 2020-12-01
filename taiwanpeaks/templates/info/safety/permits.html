@@ -1,18 +1,18 @@
 {% extends "info/base.html" %}
 
-{% block info-content %}
-<h1>Permits</h1>
+{% block info-title %}Permits{% endblock %}
 
+{% block info-content %}
 <p>Taiwan's previously strict permit requirements have been slowly relaxed in
 recent years, and many routes that were previously closed to hikers are now 
 open or no longer require entry permits. While this is a welcome trend, these 
 changes are applied inconsistently across different counties and create
 confusion around what types or permits are required for any particular 
-route. These section aims to explain the different types of permits and when 
-each is required, but when in doubt see the route description for your hike 
-for detailed permit requirements.</p>
+route. This section aims to explain the different types of permits and when 
+each is required, but when in doubt see the <a href="{% url 'routes-list' %}">
+route description</a> for your hike for detailed permit requirements.</p>
 
-<h3>Types of permits</h3>
+<h2>Types of permits</h2>
 
 <p>There are two types of permits that may be required for a high mountain hike
 and one or both may be necessary depending on the route:</p>
@@ -27,15 +27,26 @@ certain routes depending on which counties the route crosses. These are applied
 for either in person at a police station near the trailhead or via an online 
 application system.</p>
 
-<h3>Permit requirements</h3>
+<hr />
+<div class="warning">
+  <h3><i class="fas fa-exclamation-triangle"></i>&nbsp;Warning</h3>
+  <p>It is illegal to hike without permits where required. Getting caught can 
+  lead to a fine or ban, and if necessary you will be liable for any rescue 
+  costs incurred regardless of insurance.</p>
+</div>
+<hr />
 
-<p>In general the rules for which permits are required is as follows:</p>
+<h2>Permit requirements</h2>
+
+<p>In general the rules for which permits are required are as follows:
 
 <ul>
   <li>
     <strong>A National Park Entry Permit is required</strong> if your route 
     enters a national park.</li>
   </li>
+</ul>
+<ul>
   <li>
     <strong>A Police Mountain Entry Permit is required</strong> if your route 
     enters an area other than:
@@ -48,14 +59,15 @@ application system.</p>
     </ul>
   </li>
 </ul>
+</p>
 
-<h3>Applying for permits</h3>
+<h2>Applying for permits</h2>
 
 <p>The online application systems are the easiest way to apply for permits. For
-national park permits applications are available between 5 and 30 (Shei-pa 
-allows application 2 months in advance) days ahead of your date of first entry.
-Police permit applications are available at least 3 days before your date of 
-first entry.</p>
+national park permits online applications are available between 5 and 30 
+(Shei-pa allows application 2 months in advance) days ahead of your date of 
+first entry. Police permit online applications are available at least 3 days 
+before your date of first entry.</p>
 
 <p>
   When applying, be sure to prepare:
@@ -74,7 +86,6 @@ first entry.</p>
       <ul>
         <li>Name</li>
         <li>Phone number</li>
-        <li>ID number</li>
       </ul>
     </li>
     <li>A detailed itinerary for each day's planned route</li>

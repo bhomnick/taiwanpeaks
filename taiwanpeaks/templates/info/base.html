@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 
+{% load photos thumbnail %}
+
+{% block header %}
+{% photo_by_tag "peaks-list-header" as header_photo %}
+{% thumbnail header_photo.image "1920x1080" crop="center" as im %}
+<header class="header-image header-sm ken-burn-center light" data-parallax="true" data-natural-height="1080" data-natural-width="1920" data-bleed="0" data-image-src="{{ im.url }}" data-offset="0">
+  <div class="container">
+    <h1>{% block info-title %}{% endblock %}</h1>
+  </div>
+  <div class="attribution-banner">
+    {% attribution header_photo %}
+  </div>
+</header>
+{% endthumbnail %}
+{% endblock %}
+
 {% block content %}
 <section class="section-base">
 	<div class="container">
@@ -7,7 +23,7 @@
       <div class="col-lg-3">
         {% include "info/_components/menu.html" %}
       </div>
-      <div class="col-lg-9">
+      <div class="col-lg-9 info-content">
         {% block info-content %}{% endblock %}
       </div>
     </div>

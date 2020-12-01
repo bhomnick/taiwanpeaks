@@ -397,3 +397,38 @@ body > nav:before {
     min-width: 300px;
     margin: 20px 10px;
 }
+
+/*
+# Info section
+===================================================================
+*/
+
+.warning {
+    padding: 0 20px;
+}
+
+.warning i {
+    color: red;
+}
+
+.warning p {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.info-content {
+    font-size: 14px;
+    line-height: 1.7em;
+}
+
+.info-content p {
+    margin-bottom: 1.7em;
+}
+
+.info-content h1, .info-content h2 {
+    margin-bottom: 0.5em;
+}
+
+.info-content h1 + p, .info-content h2 + p {
+    margin-top: 0;
+}

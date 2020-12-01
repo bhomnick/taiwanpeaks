@@ -1,14 +1,17 @@
 <div class="menu-inner menu-inner-vertical">
   <ul>
-    <li class="dropdown active">
+    <li class="dropdown {% if 'safety' in request.path %}active{% endif %}">
       <a href="#">Safety</a>
       <ul>
-        <li><a href="#">Permits</a></li>
-        <li><a href="#">Insurance</a></li>
-        <li><a href="#">Hazards</a></li>
-        <li><a href="#">Emergencies</a></li>
-        <li><a href="#">Transportation</a></li>
-        <li><a href="#">Equipment</a></li>
+        {% url 'info-safety-permits' as url %}
+        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Permits</a></li>
+        <!--
+        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Insurance</a></li>
+        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Hazards</a></li>
+        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Emergencies</a></li>
+        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Transportation</a></li>
+        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Equipment</a></li>
+        -->
     </li>
   </ul>
 </div>
