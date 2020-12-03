@@ -104,6 +104,16 @@ body > nav:before {
     color: #cccccc !important;
 }
 
+.banner {
+    width: 100%;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
 /*
 # Homepage
 ===================================================================

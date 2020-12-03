@@ -2,6 +2,15 @@
 
 {% load static thumbnail photos %}
 
+{% block banner %}
+{% if not route.active %}
+<div class="banner banner-warning">
+This route has not been published. You are viewing a preview only visible to staff users.
+</div>
+{% endif %}
+{% endblock %}
+
+
 {% block extra_head %}
 <link
   type="text/css"

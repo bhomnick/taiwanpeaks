@@ -4,7 +4,7 @@
       <a href="#">Safety</a>
       <ul>
         {% url 'info-safety-permits' as url %}
-        <li class="{% if request.path == url %}active{% endif %}"><a href="#">Permits</a></li>
+        <li class="{% if request.path == url %}active{% endif %}"><a href="{{ url }}"><i class="im-map2"></i>Permits</a></li>
         <!--
         <li class="{% if request.path == url %}active{% endif %}"><a href="#">Insurance</a></li>
         <li class="{% if request.path == url %}active{% endif %}"><a href="#">Hazards</a></li>
