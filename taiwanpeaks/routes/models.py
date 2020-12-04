@@ -2,6 +2,7 @@ import os
 import uuid
 
 from django.db import models
+from django.urls import reverse
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -27,15 +28,19 @@ ITINERARY_REST_CHOICES = Choices(
 
 class Cabin(TimeStampedModel):
     name = models.CharField(max_length=255)
-    name_zh = models.CharField(max_length=255)
-    description = models.TextField()
-    capacity_beds = models.IntegerField(null=True, blank=True)
-    capacity_tents = models.IntegerField(null=True, blank=True)
-    altitude = models.IntegerField()
-    latitude = models.DecimalField(max_digits=8, decimal_places=5)
-    longitude = models.DecimalField(max_digits=8, decimal_places=5)
+    name_zh = models.CharField(max_length=255, verbose_name='Name (中文)', help_text=(
+        "Cabin's Chinese name, i.e. 南湖山屋"))
+    description = models.TextField(help_text="A description of cabin amenities, water supply, and any special features. Approximately 250-300 characters")
+    capacity_beds = models.IntegerField(null=True, blank=True, help_text="Number of bed slots available")
+    capacity_tents = models.IntegerField(null=True, blank=True, help_text="Number of camp sites available")
+    altitude = models.IntegerField(help_text="Altitude in meters")
+    latitude = models.DecimalField(max_digits=8, decimal_places=5, help_text="Positive number, 5 decimal places")
+    longitude = models.DecimalField(max_digits=8, decimal_places=5, help_text="Positive number, 5 decimal places")
     photo = models.ForeignKey('photos.Photo', related_name='cabins', on_delete=models.PROTECT)
-    booking_link = models.URLField(null=True, blank=True)
+    booking_link = models.URLField(null=True, blank=True, help_text=(
+        "Booking URL if cabin is booked separately from permits, for instance Jiaminghu. "
+        "Leave blank if cabin is booked along with permits."
+    ))
 
     def __str__(self):
         return self.name
@@ -49,28 +54,59 @@ def route_gpx_path(instance, filename):
 class Route(TimeStampedModel):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    name_zh = models.CharField(max_length=255)
-    active = models.BooleanField(default=False)
-    intro = models.TextField()
-    list_description = models.TextField(null=True, blank=True)
-    difficulty = models.CharField(max_length=50, choices=constants.DIFFICULTY_CHOICES)
-    total_distance = models.IntegerField( )
+    name_zh = models.CharField(max_length=255, verbose_name='Name (中文)', help_text=(
+        "Route name in Chinese, i.e. 北一段"))
+    active = models.BooleanField(default=False, help_text=(
+        "Check to publish for all users. If unchecked only staff users may preview "
+        "this route."
+    ))
+    header_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='header_background_routes',
+        help_text="Photo will appear behind route name/header.")
+    intro = models.TextField(help_text="Short intro describing the highlights of this route. Approximately 400-500 characters.")
+    difficulty = models.CharField(max_length=50, choices=constants.DIFFICULTY_CHOICES, help_text=(
+        "Beginner = tourist-friendly (think Jade)<br>"
+        "Intermediate = doable with some experience (think Nanhu)<br>"
+        "Advanced = for experienced hikers (think central sections)<br>"
+        "Expert = the 4 hurdles (S3, Mabo, Qilai East, Ganzhuowan)<br>"
+        "If unsure ask for opinions."
+    ))
+    total_distance = models.IntegerField(help_text="Total route distance in km.")
     days_required = models.IntegerField()
-    peak_count = models.IntegerField()
-    locations = models.ManyToManyField('common.Location')
-    public_transport_accessible = models.BooleanField()
-    cabin_status = models.CharField(null=True, blank=True, max_length=50, choices=CABIN_STATUS_CHOICES)
-    header_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='header_background_routes')
-    summary_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='summary_background_routes')
+    peak_count = models.IntegerField(help_text="Total number of top 100 peaks covered by this route.")
+    locations = models.ManyToManyField('common.Location', help_text=(
+        "Select any locations this route crosses. Many routes cross more than one."))
+    public_transport_accessible = models.BooleanField(help_text=(
+        "Check is trailheads are accessible via public transport."))
+    cabin_status = models.CharField(null=True, blank=True, max_length=50, choices=CABIN_STATUS_CHOICES, help_text=(
+        "All cabins = cabins available every night<br>"
+        "Mixed cabins/camping = cabins available some nights<br>"
+        "No cabins = no cabins available, must camp every night"
+    ))
+    summary_background_photo = models.ForeignKey('photos.Photo', on_delete=models.PROTECT, related_name='summary_background_routes',
+        help_text="Photo will appear behind route summary section.")
+    list_description = models.TextField(null=True, blank=True, help_text=(
+        "Short route description used in the routes list view. No more than 120 characters."
+    ))
     gpx = models.FileField(upload_to=route_gpx_path, null=True, blank=True)
-    np_permit_required = models.CharField(max_length=50, choices=constants.NP_CHOICES, null=True, blank=True)
-    police_permit_required = models.BooleanField()
-    custom_permit_info = models.TextField(null=True, blank=True)
-    transportation_desc = models.TextField(null=True, blank=True)
-    transportation_link = models.URLField(null=True, blank=True)
+    np_permit_required = models.CharField(max_length=50, choices=constants.NP_CHOICES, null=True, blank=True,
+        verbose_name="National Park Permit Required", help_text="Select the appropriate park if a national park entry permit is required.")
+    police_permit_required = models.BooleanField(help_text="Check if police mountain entry permit required.")
+    custom_permit_info = models.TextField(null=True, blank=True, help_text=(
+        "Used to override the default permit explanations if special circumstances "
+        "apply to this route. Leave blank if only regular police/np permits required."
+    ))
+    transportation_desc = models.TextField(null=True, blank=True, verbose_name="Transportation description", help_text=(
+        "Describe how to get to the trailhead, any public transportation options, "
+        "the parking situation, etc."
+    ))
+    transportation_link = models.URLField(null=True, blank=True, help_text=(
+        "An optional link to bus schedule or other external transportation resource."))
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('routes-detail', args=[self.slug])
 
     @property
     def location_list_short(self):
@@ -120,9 +156,11 @@ class RouteItinerary(models.Model):
 
     class Meta:
         ordering = ['day_no']
+        verbose_name = "Route day itinerary"
+        verbose_name_plural = "Route day itineraries"
 
     def __str__(self):
-        return f'{str(self.route)} - Day {self.day_no}'
+        return ''
 
 
 class RouteItineraryPoint(models.Model):
@@ -152,6 +190,9 @@ class RouteCabin(models.Model):
     class Meta:
         ordering = ['order']
 
+    def __str__(self):
+        return ''
+
 
 class RouteCarouselPhoto(models.Model):
     route = models.ForeignKey('Route', on_delete=models.PROTECT, related_name='carousel_photos')
@@ -162,6 +203,9 @@ class RouteCarouselPhoto(models.Model):
         unique_together = ['route', 'photo']
         ordering = ['order']
 
+    def __str__(self):
+        return ''
+
 
 class RoutePeak(models.Model):
     route = models.ForeignKey('Route', on_delete=models.PROTECT, related_name='route_peaks')
@@ -171,3 +215,6 @@ class RoutePeak(models.Model):
     class Meta:
         unique_together = ['route', 'peak']
         ordering = ['order']
+
+    def __str__(self):
+        return ''
