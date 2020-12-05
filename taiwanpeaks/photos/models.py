@@ -99,18 +99,25 @@ def uuid_photo_path(instance, filename):
 
 
 class Photo(TimeStampedModel):
-    image = ImageField(upload_to=uuid_photo_path, null=True, blank=True)
-    slug = models.SlugField(null=True, blank=True, unique=True)
+    image = ImageField(upload_to=uuid_photo_path, null=True, blank=True, help_text=(
+        "Use if uploading an image file. Leave empty if using a Flickr image."))
+    slug = models.SlugField(null=True, blank=True, unique=True, help_text=(
+        "An optional unique slug for this photo. Use only if explicitly referenced in templates."))
     default_slug = models.BooleanField(default=False)
-    description = models.TextField(null=True, blank=True)
-    flickr_id = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    attr_author = models.CharField(max_length=255, null=True, blank=True)
-    attr_title = models.CharField(max_length=255, null=True, blank=True)
-    attr_link = models.URLField(null=True, blank=True)
-    attr_license = models.CharField(max_length=50, choices=ATTR_LICENSE_CHOICES, null=True, blank=True)
-    attr_version = models.CharField(max_length=5, choices=ATTR_VERSION_CHOICES, null=True, blank=True)
+    description = models.TextField(null=True, blank=False, max_length=100, help_text=(
+        "A short description for this photo, max 100 characters."))
+    flickr_id = models.CharField(max_length=255, null=True, blank=True, unique=True, help_text=(
+        "Use if adding a photo from Flickr. Leave empty if uploading an image file."))
+    attr_author = models.CharField(max_length=255, null=True, blank=True, verbose_name="Author")
+    attr_title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Title")
+    attr_link = models.URLField(null=True, blank=True, verbose_name="Link to Original")
+    attr_license = models.CharField(max_length=50, choices=ATTR_LICENSE_CHOICES, null=True, blank=True,
+        verbose_name="License")
+    attr_version = models.CharField(max_length=5, choices=ATTR_VERSION_CHOICES, null=True, blank=True,
+        verbose_name="License Version")
 
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=False, help_text=(
+        "Comma-separated list of tags. These should include any route tags, for instance 'south-2nd'."))
 
     @property
     def thumbnail_preview(self):

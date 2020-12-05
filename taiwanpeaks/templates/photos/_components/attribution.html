@@ -1,3 +1,10 @@
 {% if photo.attr_title %}
-<a target="_blank" href="{{ photo.attr_link }}">{{ photo.attr_title }}</a> by {{ photo.attr_author }}, {{ photo.get_attr_license_display }} {{ photo.get_attr_version_display }}
+{% if photo.attr_link %}
+  <a target="_blank" href="{{ photo.attr_link }}">{{ photo.attr_title }}</a>
+{% else %}
+  {{ photo.attr_title }}
+{% endif %} 
+{% if photo.attr_author %}
+by {{ photo.attr_author }}
+{% endif %}, {{ photo.get_attr_license_display }} {{ photo.get_attr_version_display }}
 {% endif %}

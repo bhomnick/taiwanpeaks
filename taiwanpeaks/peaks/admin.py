@@ -6,6 +6,7 @@ from .models import Peak
 @admin.register(Peak)
 class PeakAdmin(admin.ModelAdmin):
     list_display = ['name', 'rank', 'name_zh', 'get_preview']
+    search_fields = ['name', 'name_zh']
     ordering = ['rank']
     raw_id_fields = ['list_photo']
     prepopulated_fields = {'slug': ('name',)}
