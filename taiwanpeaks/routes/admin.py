@@ -112,6 +112,9 @@ class RouteItineraryPhotoInline(AdminImageMixin, admin.TabularInline):
     ordering = ['order']
     raw_id_fields = ['photo']
     readonly_fields = ['get_preview']
+    verbose_name = 'photo'
+    verbose_name_plural = 'photos'
+    extra = 0
 
     def get_preview(self, obj):
         return obj.photo.thumbnail_preview
@@ -122,8 +125,28 @@ class RouteItineraryPhotoInline(AdminImageMixin, admin.TabularInline):
 class RouteItineraryPointInline(admin.TabularInline):
     model = RouteItineraryPoint
     ordering = ['order']
+    verbose_name = 'waypoint'
+    verbose_name_plural = 'waypoints'
+    extra = 0
 
 
 @admin.register(RouteItinerary)
 class RouteItineraryAdmin(admin.ModelAdmin):
     inlines = [RouteItineraryPhotoInline, RouteItineraryPointInline]
+    fieldsets = (
+        ('Basics', {
+            'fields': ['route', 'day_no', 'total_distance', 'total_hours',
+                       'title', 'description']
+        }),
+        ('Shelter', {
+            'fields': ['rest_name', 'rest_type', 'water_desc']
+        })
+    )
+
+    def get_model_perms(self, request):
+        return {}
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['route']
+        return []

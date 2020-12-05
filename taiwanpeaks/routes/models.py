@@ -145,22 +145,25 @@ class Route(TimeStampedModel):
 
 class RouteItinerary(models.Model):
     route = models.ForeignKey('Route', related_name='itineraries', on_delete=models.PROTECT)
-    day_no = models.IntegerField()
-    total_distance = models.DecimalField(max_digits=3, decimal_places=1)
-    total_hours = models.DecimalField(max_digits=3, decimal_places=1)
-    rest_name = models.CharField(max_length=255, null=True, blank=True)
-    rest_type = models.CharField(max_length=50, choices=ITINERARY_REST_CHOICES, null=True, blank=True)
-    water_desc = models.CharField(max_length=255, null=True, blank=True)
+    day_no = models.IntegerField(verbose_name='day number')
+    total_distance = models.DecimalField(max_digits=3, decimal_places=1, help_text='Total distance for the day in kilometers')
+    total_hours = models.DecimalField(max_digits=3, decimal_places=1, help_text='Total hiking time for the day in hours')
+    rest_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='Shelter name', help_text=(
+        "Name of cabin or campsite"))
+    rest_type = models.CharField(max_length=50, choices=ITINERARY_REST_CHOICES, null=True, blank=True, verbose_name='Shelter type')
+    water_desc = models.CharField(max_length=255, null=True, blank=True, verbose_name='Water description', help_text=(
+        "Brief description of water source. Include location and reliability."
+    ))
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['day_no']
-        verbose_name = "Route day itinerary"
-        verbose_name_plural = "Route day itineraries"
+        verbose_name = "itinerary"
+        verbose_name_plural = "itineraries"
 
     def __str__(self):
-        return ''
+        return f'{self.route} - Day {self.day_no}'
 
 
 class RouteItineraryPoint(models.Model):
@@ -171,6 +174,7 @@ class RouteItineraryPoint(models.Model):
 
     class Meta:
         ordering = ['order']
+
 
 
 class RouteItineraryPhoto(models.Model):
